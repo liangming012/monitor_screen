@@ -29,7 +29,7 @@ def get_db():
         db.close()
 
 
-def get_current_user(
+def login_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
@@ -48,16 +48,16 @@ def get_current_user(
     return user
 
 
-def get_current_active_user(
-    current_user: models.User = Depends(get_current_user),
+def active_user(
+    current_user: models.User = Depends(login_user),
 ) -> models.User:
     if not crud_user.is_active(current_user):
         raise HTTPException(status_code=400, detail="该用户未启用！")
     return current_user
 
 
-def get_current_active_superuser(
-    current_user: models.User = Depends(get_current_user),
+def super_user(
+    current_user: models.User = Depends(login_user),
 ) -> models.User:
     if not crud_user.is_superuser(current_user):
         raise HTTPException(

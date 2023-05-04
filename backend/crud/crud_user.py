@@ -1,13 +1,11 @@
 from typing import Dict, Optional, Union
-
 from sqlalchemy.orm import Session
-
 import models
+import schemas
+from crud.base import CRUDBase
+from schemas.user import UserCreate
 from core.permissions import Permissions
 from core.security import get_password_hash, verify_password
-from crud.base import CRUDBase
-from models import User
-from schemas.user import UserCreate
 
 
 class CRUDUser(CRUDBase):
@@ -27,7 +25,7 @@ class CRUDUser(CRUDBase):
         db.refresh(db_obj)
         return db_obj
 
-    def update(self, db: Session, db_obj: models.User, obj_in: Union[User, Dict]) -> User:
+    def update(self, db: Session, db_obj: models.User, obj_in: Union[schemas.User, Dict]) -> models.User:
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
@@ -53,5 +51,5 @@ class CRUDUser(CRUDBase):
         return Permissions.ADMIN.value in user.roles.split(',')
 
 
-crud_user = CRUDUser(User)
+crud_user = CRUDUser(models.User)
 
