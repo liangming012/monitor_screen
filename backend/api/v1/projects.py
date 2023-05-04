@@ -1,9 +1,9 @@
 from typing import Any, List
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import models
 from api import deps
 from crud.crud_project import crud_project
+from models.user_model import UserModel
 from schemas.msg import Msg
 from schemas.project import Project, ProjectUpdate, ProjectCreate
 
@@ -15,7 +15,7 @@ def get_projects(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
-    current_user: models.User = Depends(deps.active_user),
+    current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取项目列表
@@ -27,7 +27,7 @@ def get_projects(
 @router.get("/{project_id}", response_model=Project)
 def read_project_by_id(
     project_id: int,
-    current_user: models.User = Depends(deps.active_user),
+    current_user: UserModel = Depends(deps.active_user),
     db: Session = Depends(deps.get_db),
 ) -> Any:
     """
@@ -43,7 +43,7 @@ def update_user(
     db: Session = Depends(deps.get_db),
     project_id: int,
     project_in: ProjectUpdate,
-    current_user: models.User = Depends(deps.active_user),
+    current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     修改项目信息
@@ -61,7 +61,7 @@ def update_user(
 @router.delete("/{project_id}", response_model=Project)
 def delete_user_by_id(
     project_id: int,
-    current_user: models.User = Depends(deps.active_user),
+    current_user: UserModel = Depends(deps.active_user),
     db: Session = Depends(deps.get_db),
 ) -> Any:
     """
@@ -80,7 +80,7 @@ def delete_user_by_id(
 @router.post("/", response_model=Project)
 def create_projects(project_in: ProjectCreate,
                 db: Session = Depends(deps.get_db),
-                current_user: models.User = Depends(deps.active_user)
+                current_user: UserModel = Depends(deps.active_user)
                 ) -> Any:
     project = crud_project.get_project(db, project_in.name)
     if project:

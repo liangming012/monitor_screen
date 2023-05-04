@@ -1,20 +1,19 @@
 from typing import Dict, Optional, Union
 from sqlalchemy.orm import Session
-import models
-import schemas
 from crud.base import CRUDBase
-from schemas.user import UserCreate
+from models.user_model import UserModel
+from schemas.user import UserCreate, User
 from core.permissions import Permissions
 from core.security import get_password_hash, verify_password
 
 
 class CRUDUser(CRUDBase):
 
-    def get_user(self, db: Session, email: str) -> Optional[models.User]:
-        return db.query(models.User).filter(models.User.email == email).first()
+    def get_user(self, db: Session, email: str) -> Optional[UserModel]:
+        return db.query(UserModel).filter(UserModel.email == email).first()
 
-    def create(self, db: Session, obj_in: UserCreate) -> models.User:
-        db_obj = models.User(
+    def create(self, db: Session, obj_in: UserCreate) -> UserModel:
+        db_obj = UserModel(
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
             full_name=obj_in.full_name,
@@ -25,7 +24,7 @@ class CRUDUser(CRUDBase):
         db.refresh(db_obj)
         return db_obj
 
-    def update(self, db: Session, db_obj: models.User, obj_in: Union[schemas.User, Dict]) -> models.User:
+    def update(self, db: Session, db_obj: UserModel, obj_in: Union[User, Dict]) -> UserModel:
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
@@ -36,7 +35,7 @@ class CRUDUser(CRUDBase):
             update_data["hashed_password"] = hashed_password
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
-    def authenticate(self, db: Session, email: str, password: str) -> Optional[models.User]:
+    def authenticate(self, db: Session, email: str, password: str) -> Optional[UserModel]:
         user = self.get_user(db, email=email)
         if not user:
             return None
@@ -44,12 +43,12 @@ class CRUDUser(CRUDBase):
             return None
         return user
 
-    def is_active(self, user: models.User) -> bool:
+    def is_active(self, user: UserModel) -> bool:
         return user.is_active
 
-    def is_superuser(self, user: models.User) -> bool:
+    def is_superuser(self, user: UserModel) -> bool:
         return Permissions.ADMIN.value in user.roles.split(',')
 
 
-crud_user = CRUDUser(models.User)
+crud_user = CRUDUser(UserModel)
 
