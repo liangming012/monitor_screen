@@ -1,12 +1,9 @@
-from typing import Optional, List
-
+from typing import Optional
 from pydantic import BaseModel, EmailStr
-
-
-# 公共属性
 from core.permissions import Permissions
 
 
+# 基础属性
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
@@ -21,12 +18,12 @@ class UserCreate(UserBase):
     full_name: str
 
 
-# 修改密码
+# 修改用户
 class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
-# 数据库保存基础属性
+# 数据库基础属性
 class UserInDBBase(UserBase):
     id: Optional[int] = None
 

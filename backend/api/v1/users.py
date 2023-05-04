@@ -3,9 +3,9 @@ from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
-import models
 from api import deps
 from crud.crud_user import crud_user
+from models.user_model import UserModel
 from schemas.msg import Msg
 from schemas.user import User, UserUpdate, UserCreate
 
@@ -17,7 +17,7 @@ def get_users(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
-    current_user: models.User = Depends(deps.get_current_active_superuser),
+    current_user: UserModel = Depends(deps.super_user),
 ) -> Any:
     """
     获取用户列表
@@ -33,7 +33,7 @@ def update_user_me(
     password: str = Body(None),
     full_name: str = Body(None),
     email: EmailStr = Body(None),
-    current_user: models.User = Depends(deps.get_current_active_user),
+    current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     修改当前登陆用户信息
@@ -52,7 +52,7 @@ def update_user_me(
 
 @router.get("/me", response_model=User)
 def read_user_me(
-    current_user: models.User = Depends(deps.get_current_active_user),
+    current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取当前用户信息
@@ -63,7 +63,7 @@ def read_user_me(
 @router.get("/{user_id}", response_model=User)
 def read_user_by_id(
     user_id: int,
-    current_user: models.User = Depends(deps.get_current_active_user),
+    current_user: UserModel = Depends(deps.active_user),
     db: Session = Depends(deps.get_db),
 ) -> Any:
     """
@@ -85,7 +85,7 @@ def update_user(
     db: Session = Depends(deps.get_db),
     user_id: int,
     user_in: UserUpdate,
-    current_user: models.User = Depends(deps.get_current_active_superuser),
+    current_user: UserModel = Depends(deps.super_user),
 ) -> Any:
     """
     修改用户信息
@@ -103,13 +103,18 @@ def update_user(
 @router.delete("/{user_id}", response_model=User)
 def delete_user_by_id(
     user_id: int,
-    current_user: models.User = Depends(deps.get_current_active_superuser),
+    current_user: UserModel = Depends(deps.super_user),
     db: Session = Depends(deps.get_db),
 ) -> Any:
     """
     删除用户
     """
     user = crud_user.get(db, unique_id=user_id)
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="找不到该用户！",
+        )
     if user == current_user:
         raise HTTPException(
             status_code=400, detail="不能删除自己！"
@@ -121,7 +126,7 @@ def delete_user_by_id(
 @router.post("/", response_model=User)
 def create_user(user_in: UserCreate,
                 db: Session = Depends(deps.get_db),
-                current_user: models.User = Depends(deps.get_current_active_superuser)
+                current_user: UserModel = Depends(deps.super_user)
                 ) -> Any:
     user = crud_user.get_user(db, user_in.email)
     if user:

@@ -7,10 +7,10 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import models
 from core import security
 from core.config import settings
 from crud.crud_user import crud_user
+from models.user_model import UserModel
 from schemas.token import TokenPayload
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -29,9 +29,9 @@ def get_db():
         db.close()
 
 
-def get_current_user(
+def login_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
-) -> models.User:
+) -> UserModel:
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
@@ -48,17 +48,17 @@ def get_current_user(
     return user
 
 
-def get_current_active_user(
-    current_user: models.User = Depends(get_current_user),
-) -> models.User:
+def active_user(
+    current_user: UserModel = Depends(login_user),
+) -> UserModel:
     if not crud_user.is_active(current_user):
         raise HTTPException(status_code=400, detail="该用户未启用！")
     return current_user
 
 
-def get_current_active_superuser(
-    current_user: models.User = Depends(get_current_user),
-) -> models.User:
+def super_user(
+    current_user: UserModel = Depends(login_user),
+) -> UserModel:
     if not crud_user.is_superuser(current_user):
         raise HTTPException(
             status_code=400, detail="该用户权限不够！"
