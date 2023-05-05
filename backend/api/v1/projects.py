@@ -38,7 +38,7 @@ def read_project_by_id(
 
 
 @router.put("/{project_id}", response_model=Project)
-def update_user(
+def update_project(
     *,
     db: Session = Depends(deps.get_db),
     project_id: int,
@@ -59,7 +59,7 @@ def update_user(
 
 
 @router.delete("/{project_id}", response_model=Project)
-def delete_user_by_id(
+def delete_project_by_id(
     project_id: int,
     current_user: UserModel = Depends(deps.active_user),
     db: Session = Depends(deps.get_db),
@@ -78,7 +78,7 @@ def delete_user_by_id(
 
 
 @router.post("/", response_model=Project)
-def create_projects(project_in: ProjectCreate,
+def create_project(project_in: ProjectCreate,
                 db: Session = Depends(deps.get_db),
                 current_user: UserModel = Depends(deps.active_user)
                 ) -> Any:
