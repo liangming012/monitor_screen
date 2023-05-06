@@ -10,7 +10,6 @@ class RecordBase(BaseModel):
     status: Optional[int] = None
     url: Optional[str] = None
     check_time: Optional[int] = None
-    create_time: Optional[int] = None
     project_id: Optional[int] = None
 
 
@@ -24,7 +23,7 @@ class RecordCreate(RecordBase):
     project_id: int
 
 
-# 修改项目
+# 修改记录
 class RecordUpdate(RecordBase):
     pass
 
@@ -40,5 +39,5 @@ class RecordInDBBase(RecordBase):
 
 # API返回项目信息
 class Record(RecordInDBBase):
-    pass
+    create_time: Optional[int] = None
 

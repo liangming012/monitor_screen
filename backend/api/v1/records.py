@@ -58,7 +58,7 @@ def update_record(
     return record
 
 
-@router.delete("/{record_id}", response_model=Record)
+@router.delete("/{record_id}", response_model=Msg)
 def delete_record_by_id(
         record_id: int,
         current_user: UserModel = Depends(deps.active_user),

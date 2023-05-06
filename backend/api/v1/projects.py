@@ -58,7 +58,7 @@ def update_project(
     return project
 
 
-@router.delete("/{project_id}", response_model=Project)
+@router.delete("/{project_id}", response_model=Msg)
 def delete_project_by_id(
     project_id: int,
     current_user: UserModel = Depends(deps.active_user),

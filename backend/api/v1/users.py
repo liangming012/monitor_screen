@@ -109,7 +109,7 @@ def delete_user_by_id(
     """
     删除用户
     """
-    user = crud_user.get(db, unique_id=user_id)
+    user = crud_user.get(db, unique_id=Msg)
     if not user:
         raise HTTPException(
             status_code=404,
