@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 # 基础属性
@@ -10,7 +10,6 @@ class RecordBase(BaseModel):
     status: Optional[int] = None
     url: Optional[str] = None
     check_time: Optional[int] = None
-    create_time: Optional[int] = None
     project_id: Optional[int] = None
 
 
@@ -40,5 +39,5 @@ class RecordInDBBase(RecordBase):
 
 # API返回项目信息
 class Record(RecordInDBBase):
-    pass
+    create_time: Optional[int] = None
 

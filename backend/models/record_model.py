@@ -19,5 +19,5 @@ class RecordModel(Base):
     project: Mapped["ProjectModel"] = relationship(back_populates="records")
 
     def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.name!r}, duration_limit={self.duration_limit!r}), " \
+        return f"RecordModel(id={self.id!r}, name={self.name!r}, duration_limit={self.duration_limit!r}), " \
                f"jenkins_url={self.jenkins_url!r}, enable={self.enable!r})"
