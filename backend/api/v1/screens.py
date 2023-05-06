@@ -58,7 +58,7 @@ def update_screen(
     return screen
 
 
-@router.delete("/{screen_id}", response_model=Screen)
+@router.delete("/{screen_id}", response_model=Msg)
 def delete_screen_by_id(
         screen_id: int,
         current_user: UserModel = Depends(deps.active_user),

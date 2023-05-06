@@ -58,7 +58,7 @@ def update_show(
     return show
 
 
-@router.delete("/{show_id}", response_model=Show)
+@router.delete("/{show_id}", response_model=Msg)
 def delete_show_by_id(
         show_id: int,
         current_user: UserModel = Depends(deps.active_user),
