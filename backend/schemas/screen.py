@@ -9,12 +9,12 @@ class ScreenBase(BaseModel):
     show_type: Optional[int] = None
 
 
-# 创建项目
+# 创建屏幕
 class ScreenCreate(ScreenBase):
     pass
 
 
-# 修改项目
+# 修改屏幕
 class ScreenUpdate(ScreenBase):
     pass
 
@@ -28,7 +28,7 @@ class ScreenInDBBase(ScreenBase):
         orm_mode = True
 
 
-# API返回项目信息
+# API返回屏幕信息
 class Screen(ScreenInDBBase):
     pass
 

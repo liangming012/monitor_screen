@@ -14,5 +14,5 @@ class UserModel(Base):
     roles: Mapped[str] = mapped_column(String(500), default=False)
 
     def __repr__(self) -> str:
-        return f"User(id={self.id!r}, full_name={self.full_name!r}, email={self.email!r}), " \
+        return f"UserModel(id={self.id!r}, full_name={self.full_name!r}, email={self.email!r}), " \
                f"is_active={self.is_active!r}, roles={self.roles!r})"

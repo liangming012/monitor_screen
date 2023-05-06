@@ -13,5 +13,7 @@ class ScreenModel(Base):
     name: Mapped[str] = mapped_column(String(50), index=True, nullable=False)
     show_type: Mapped[int] = mapped_column(default=0, nullable=False)
 
+    shows: Mapped[List["ShowModel"]] = relationship(back_populates="screen", cascade="all, delete-orphan")
+
     def __repr__(self) -> str:
-        return f"Screen(id={self.id!r}, name={self.name!r}, show_type={self.show_type!r})"
+        return f"ScreenModel(id={self.id!r}, name={self.name!r}, show_type={self.show_type!r})"

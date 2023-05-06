@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 # 基础属性
@@ -23,7 +23,7 @@ class RecordCreate(RecordBase):
     project_id: int
 
 
-# 修改项目
+# 修改记录
 class RecordUpdate(RecordBase):
     pass
 
