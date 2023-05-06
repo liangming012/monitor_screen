@@ -1,5 +1,5 @@
 import time
-from typing import Dict, Optional, Union
+from typing import Dict, Union
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
 from models.record_model import RecordModel
