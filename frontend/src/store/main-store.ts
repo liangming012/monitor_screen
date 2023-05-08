@@ -20,7 +20,7 @@ export const useMainStore = defineStore('main', {
   }),
   getters: {
     hasAdminAccess: (state: MainState) => {
-      return (state.userProfile && state.userProfile.is_active && (state.userProfile.roles.indexOf('10001') > -1));
+      return (state.userProfile && state.userProfile.is_active && (state.userProfile.roles.split(',').indexOf('10001') > -1));
     }
   },
   actions: {
@@ -94,23 +94,18 @@ export const useMainStore = defineStore('main', {
         }
       }
     },
-    async actionRemoveLogIn() {
+    async actionLogOut() {
+      sessionStorage.clear();
       removeLocalToken();
       this.token = '';
       this.isLoggedIn = false;
-    },
-    async actionLogOut() {
-      await this.actionRemoveLogIn();
-      await this.actionRouteLogOut();
+      if (router.currentRoute.path !== '/login') {
+        router.push('/login');
+      }
     },
     async actionUserLogOut() {
       await this.actionLogOut();
       this.notifications.push({ content: 'Logged out', color: 'success' });
-    },
-    actionRouteLogOut() {
-      if (router.currentRoute.path !== '/login') {
-        router.push('/login');
-      }
     },
     async actionCheckApiError(payload: AxiosError) {
       if (payload.response!.status === 401) {

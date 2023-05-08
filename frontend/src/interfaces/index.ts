@@ -1,7 +1,7 @@
 export interface IUserProfile {
     email: string;
     is_active: boolean;
-    roles: [string];
+    roles: string;
     full_name: string;
     id: number;
 }

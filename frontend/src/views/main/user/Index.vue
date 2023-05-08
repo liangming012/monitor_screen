@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import userApi from "../../api/user";
+import userApi from "../../../api/user.js";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router'

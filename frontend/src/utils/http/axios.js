@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import {getLocalToken} from "../storage/localStorage.ts";
 // 1. 创建axios实例
 const instance = axios.create({
   // 接口
@@ -10,9 +11,10 @@ const instance = axios.create({
 // 2.请求拦截
 instance.interceptors.request.use(
   config => {
-    let token = sessionStorage.getItem('token')
+    // let token = sessionStorage.getItem('token')
+    let token = getLocalToken();
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
