@@ -12,9 +12,6 @@ export const useMainStore = defineStore('main', {
   state:():MainState =>({
     token: '',
     userProfile: null,
-    dashboardMiniDrawer: false,
-    dashboardShowDrawer: true,
-    notifications: [],
   }),
   getters: {
     hasAdminAccess: (state: MainState) => {
@@ -32,15 +29,16 @@ export const useMainStore = defineStore('main', {
           await router.push('/main');
           ElMessage.success('登录成功！');
         } else {
-          await this.actionLogOut();
+          await this.clearData();
+          ElMessage.error(response.data.detail);
         }
       } catch (err) {
-        await this.actionLogOut();
+        await this.clearData();
       }
     },
     async actionGetUserProfile() {
       try {
-        const response = await user.getMe(this.token);
+        const response = await user.getMe();
         if (response.data) {
           this.userProfile = response.data;
         }
@@ -50,14 +48,11 @@ export const useMainStore = defineStore('main', {
     },
     async actionUpdateUserProfile(payload) {
       try {
-        const loadingNotification = { content: 'saving', showProgress: true };
-        this.notifications.push(loadingNotification);
-        const response = (await Promise.all([
-          user.updateMe(this.token, payload),
-          await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
-        ]))[0];
-        this.userProfile = response.data;
-        ElMessage.success('用户信息更新成功！');
+        const response = await user.updateMe(payload);
+        if (response.data) {
+          this.userProfile = response.data;
+          ElMessage.success('用户密码修改成功！');
+        }
       } catch (error) {
         await this.actionCheckApiError(error);
       }

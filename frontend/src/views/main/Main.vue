@@ -24,7 +24,7 @@
                           </p>
                           <template #dropdown>
                               <el-dropdown-menu>
-                                <el-dropdown-item @click.native="">个人信息</el-dropdown-item>
+                                <el-dropdown-item @click.native="router.push('/main/profile/view')">个人信息</el-dropdown-item>
                                   <el-dropdown-item @click.native="logout">退出系统</el-dropdown-item>
                               </el-dropdown-menu>
                           </template>
@@ -91,6 +91,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import {useMainStore} from "../../store/main-store.ts";
+import router from "../../router/index.ts";
 const store = useMainStore();
 // 挂载 DOM 之前，获取默认菜单链接的激活路径
 onBeforeMount(() => {

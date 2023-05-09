@@ -1,31 +1,23 @@
 <template>
   <el-card>
-    <el-container>
-      <el-header>
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/main/dashboard' }">首页</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-header>
-      <el-main>
-        <el-row>
-          欢迎 {{store.userProfile.full_name}} ！
-        </el-row>
-        <br>
-        <br>
-        <br>
-        <br>
-        <el-row>
-          <el-button type="primary">查看个人信息</el-button>
-          <el-button type="primary">修改个人信息</el-button>
-          <el-button type="primary">修改密码</el-button>
-        </el-row>
-      </el-main>
-    </el-container>
+    <template #header>
+      <ProfileHeader :title=title :return=false></ProfileHeader>
+    </template>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ProfileButton></ProfileButton>
   </el-card>
 </template>
 <script setup>
 import {useMainStore} from "../../store/main-store.ts";
+import ProfileButton from "../../components/profile/ProfileButton.vue";
+import ProfileHeader from "../../components/profile/ProfileHeader.vue";
 const store = useMainStore();
+const title = "欢迎 " + store.userProfile.full_name + ' !';
+
+
 </script>
 
 <style scoped>

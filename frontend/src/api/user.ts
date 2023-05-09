@@ -12,19 +12,19 @@ export const user = {
         params.append('client_secret', '');
         return http.post(`login/access-token`, params);
     },
-    async getMe(token: string) {
+    async getMe() {
         return http.get<IUserProfile>('users/me', {})
     },
-    async updateMe(token: string, data: IUserProfileUpdate) {
+    async updateMe(data: IUserProfileUpdate) {
         return http.put<IUserProfile>(`users/me`, data);
     },
-    async getUsers(token: string) {
+    async getUsers() {
         return http.get<IUserProfile[]>(`users/`, {});
     },
-    async updateUser(token: string, userId: number, data: IUserProfileUpdate) {
+    async updateUser(userId: number, data: IUserProfileUpdate) {
         return http.put(`users/${userId}`, data);
     },
-    async createUser(token: string, data: IUserProfileCreate) {
+    async createUser(data: IUserProfileCreate) {
         return http.post(`users/`, data);
     }
 }

@@ -34,7 +34,8 @@ instance.interceptors.response.use(
       const status = error.response.status
       switch (status) {
         case 400:
-          ElMessage.error("请求错误");
+          // ElMessage.error("请求错误");
+          ElMessage.error(error.response.data.detail);
           break;
         case 401:
           ElMessage.error("未授权，请重新登录");

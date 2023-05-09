@@ -29,28 +29,25 @@ const  routes = [
                         path: 'dashboard',
                         component: () => import('../views/main/Dashboard.vue'),
                     },
-                    // {
-                    //     path: 'profile',
-                    //     component: RouterComponent,
-                    //     redirect: 'profile/view',
-                    //     children: [
-                    //         {
-                    //             path: 'view',
-                    //             component: () => import(
-                    //                 /* webpackChunkName: "main-profile" */ './views/main/profile/UserProfile.vue'),
-                    //         },
-                    //         {
-                    //             path: 'edit',
-                    //             component: () => import(
-                    //                 /* webpackChunkName: "main-profile-edit" */ './views/main/profile/UserProfileEdit.vue'),
-                    //         },
-                    //         {
-                    //             path: 'password',
-                    //             component: () => import(
-                    //                 /* webpackChunkName: "main-profile-password" */ './views/main/profile/UserProfileEditPassword.vue'),
-                    //         },
-                    //     ],
-                    // },
+                    {
+                        path: 'profile',
+                        name: 'profile',
+                        redirect: 'main/profile/view',
+                        children: [
+                            {
+                                path: 'view',
+                                component: () => import('../views/main/profile/UserProfile.vue'),
+                            },
+                            {
+                                path: 'edit',
+                                component: () => import('../views/main/profile/UserProfileEdit.vue'),
+                            },
+                            {
+                                path: 'password',
+                                component: () => import('../views/main/profile/UserProfilePassword.vue'),
+                            },
+                        ],
+                    },
                     // {
                     //     path: 'admin',
                     //     component: () => import(/* webpackChunkName: "main-admin" */ './views/main/admin/Admin.vue'),

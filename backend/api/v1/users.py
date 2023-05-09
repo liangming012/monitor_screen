@@ -4,6 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
 from api import deps
+from core.security import get_password_hash, verify_password
 from crud.crud_user import crud_user
 from models.user_model import UserModel
 from schemas.msg import Msg
@@ -30,6 +31,7 @@ def get_users(
 def update_user_me(
     *,
     db: Session = Depends(deps.get_db),
+    old_password: str = Body(None),
     password: str = Body(None),
     full_name: str = Body(None),
     email: EmailStr = Body(None),
@@ -41,6 +43,10 @@ def update_user_me(
     current_user_data = jsonable_encoder(current_user)
     user_in = UserUpdate(**current_user_data)
     if password is not None:
+        if old_password is None:
+            raise HTTPException(status_code=400, detail="修改密码必须输入旧密码！")
+        if not verify_password(old_password, crud_user.get(db, current_user.id).hashed_password):
+            raise HTTPException(status_code=400, detail="旧密码错误！")
         user_in.password = password
     if full_name is not None:
         user_in.full_name = full_name
