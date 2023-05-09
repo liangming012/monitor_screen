@@ -1,7 +1,7 @@
 <template>
   <el-container>
       <el-header>
-        <el-icon><Monitor /></el-icon> 监控屏后台管理
+        <el-icon><Monitor /></el-icon> 监控屏后台管理系统
       </el-header>
       <el-main>
         <el-card>

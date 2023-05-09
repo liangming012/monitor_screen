@@ -4,6 +4,7 @@ import {useMainStore} from "../store/main-store";
 const  routes = [
     {
         path: '/',
+        name: 'index',
         redirect: '/login',
         children: [
             {
@@ -21,11 +22,13 @@ const  routes = [
                     title: '首页'
                 },
                 component: () => import('../views/main/Main.vue'),
+                redirect: '/main/dashboard',
                 children: [
-                    // {
-                    //     path: 'dashboard',
-                    //     component: () => import(/* webpackChunkName: "main-dashboard" */ './views/main/Dashboard.vue'),
-                    // },
+                    {
+                        name: 'dashboard',
+                        path: 'dashboard',
+                        component: () => import('../views/main/Dashboard.vue'),
+                    },
                     // {
                     //     path: 'profile',
                     //     component: RouterComponent,
@@ -92,26 +95,20 @@ const router = createRouter({
     routes, //same --- > routes:routes
 });
 
-const startRouteGuard = async (to, from, store) => {
-    await store.actionCheckLoggedIn();
-    if (store.isLoggedIn) {
-        if (to.path === '/login' || to.path === '/') {
-            return { name: 'main' };
-        }
-    } else if (store.isLoggedIn === false) {
-        if (to.path === '/' || (to.path as string).startsWith('/main')) {
-            return { name: 'login' };
-        }
-    }
-};
 router.beforeEach(async (to, from) => {
-    const store = useMainStore();
-    startRouteGuard(to, from, store);
+    if(to.name !=='login')
+    {
+        const store = useMainStore();
+        await store.actionCheckLoggedIn();
+    }
 });
 
 router.afterEach(async (to, from) => {
-    const store = useMainStore();
-    startRouteGuard(to, from, store);
+    if(to.name !=='login')
+    {
+        const store = useMainStore();
+        await store.actionCheckLoggedIn();
+    }
 });
 
 export default router;

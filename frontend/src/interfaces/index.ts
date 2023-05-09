@@ -24,12 +24,7 @@ export interface IUserProfileCreate {
 
 export interface MainState {
     token: string;
-    isLoggedIn: boolean | null;
-    logInError: boolean;
     userProfile: IUserProfile | null;
-    dashboardMiniDrawer: boolean;
-    dashboardShowDrawer: boolean;
-    notifications: AppNotification[];
 }
 
 export interface AdminState {
