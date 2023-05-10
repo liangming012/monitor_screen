@@ -36,40 +36,24 @@
                 <!-- 菜单 -->
                 <el-aside>
                     <el-menu :router=true :default-active="router.currentRoute.value.path" class="el-menu-vertical-demo" :collapse="isCollapse">
-                      <el-menu-item index="/main/dashboard">
-                          <el-icon>
-                              <house />
-                          </el-icon>
-                          <span>首页</span>
-                      </el-menu-item>
-                      <el-menu-item index="/main/user/list">
-                        <el-icon><user /></el-icon>
-                        <template #title>用户管理</template>
-                      </el-menu-item>
-                      <el-sub-menu index="/projects">
+                      <template v-for="menu in menuList" :key="menu.id">
+                        <!-- 如果没有子菜单-->
+                        <el-menu-item v-show="menu.children.length === 0" :index="menu.index">
+                            <component v-if="menu.icon" :class="!isCollapse? 'icons': ''" :is="menu.icon"></component>
+                          <span>{{menu.name}}</span>
+                        </el-menu-item>
+                        <!-- 如果有子菜单-->
+                        <el-sub-menu v-show="menu.children.length > 0" :index="menu.index">
                           <template #title>
-                            <el-icon><Operation /></el-icon>
-                            <span>项目管理</span>
+                            <component v-if="menu.icon" :class="!isCollapse? 'icons': ''" :is="menu.icon"></component>
+                            <span>{{menu.name}}</span>
                           </template>
-                          <el-menu-item index="2-1">项目列表</el-menu-item>
-                          <el-menu-item index="2-1">记录列表</el-menu-item>
-                      </el-sub-menu>
-                      <el-sub-menu index="/screens">
-                        <template #title>
-                          <el-icon><Monitor /></el-icon>
-                          <span>屏幕管理</span>
-                        </template>
-                        <el-menu-item index="2-1">屏幕列表</el-menu-item>
-                        <el-menu-item index="2-1">显示列表</el-menu-item>
-                      </el-sub-menu>
-                      <el-sub-menu index="/notices">
-                        <template #title>
-                          <el-icon><Notification /></el-icon>
-                          <span>报警管理</span>
-                        </template>
-                        <el-menu-item index="2-1">报警方式</el-menu-item>
-                        <el-menu-item index="2-1">报警列表</el-menu-item>
-                      </el-sub-menu>
+                          <el-menu-item v-for="childMenu in menu.children" :index="menu.children.index" :key="childMenu.id">
+                            <component v-if="childMenu.icon" :class="!isCollapse? 'icons': ''" :is="childMenu.icon"></component>
+                            <span>{{childMenu.name}}</span>
+                          </el-menu-item>
+                        </el-sub-menu>
+                      </template>
                     </el-menu>
                 </el-aside>
                 <el-container>
@@ -92,6 +76,23 @@ import router from "../../router/index.ts";
 import Footer from "../../components/Footer.vue";
 const store = useMainStore();
 let isCollapse = ref(false); //默认展开菜单
+// 菜单配置
+const menuList = [
+  {"id":'1' , "name": "首页", "icon": "house", "index": "/main/dashboard", "children":[]},
+  {"id":'2' , "name": "用户管理", "icon": "user", "index": "/main/user/list", "children":[]},
+  {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/project", "children":[
+      {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/project-list"},
+      {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/project/record-list"},
+    ]},
+  {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/screen", "children":[
+      {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/screen-list"},
+      {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/screen/show-list"},
+    ]},
+  {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/notice", "children":[
+      {"id": "4-1", "name": "报警方式", "icon": "", "index": "/main/notice/notice-list"},
+      {"id": "4-2", "name": "报警列表", "icon": "", "index": "/main/notice/notice-list"},
+    ]},
+]
 
 const logout = () => {
     store.actionLogOut()
@@ -99,6 +100,10 @@ const logout = () => {
 </script>
 
 <style scoped>
+.icons{
+  width: 50%;
+  height: 50%;
+}
 .home-container {
   position: absolute;
   height: 100%;
