@@ -19,9 +19,7 @@
           </el-form>
         </el-card>
       </el-main>
-      <el-footer>
-        <p>Copyright © 2023-2033 <el-tag>作者邮箱：liangming012@gmail.com</el-tag></p>
-      </el-footer>
+      <Footer></Footer>
     </el-container>
 </template>
 
@@ -29,6 +27,7 @@
 import { reactive, ref } from "vue";
 import {useMainStore} from "../store/main-store";
 import {isEmail} from "../utils/validate/validate";
+import Footer from "../components/Footer.vue";
 const form = reactive({
   email: "",
   password: "",

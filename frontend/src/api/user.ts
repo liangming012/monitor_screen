@@ -18,13 +18,17 @@ export const user = {
     async updateMe(data: IUserProfileUpdate) {
         return http.put<IUserProfile>(`users/me`, data);
     },
-    async getUsers() {
-        return http.get<IUserProfile[]>(`users/`, {});
+    async getUsers(data) {
+        return http.get<IUserProfile[]>(`users/`, data);
     },
     async updateUser(userId: number, data: IUserProfileUpdate) {
         return http.put(`users/${userId}`, data);
     },
     async createUser(data: IUserProfileCreate) {
         return http.post(`users/`, data);
+    }
+    ,
+    async deleteUser(userId: number) {
+        return http.post(`users/${userId}` );
     }
 }

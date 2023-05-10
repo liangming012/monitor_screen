@@ -2,7 +2,7 @@
     <div>
         <el-card class="box-card">
           <template #header>
-            <ProfileHeader title="个人信息" :user-view=true></ProfileHeader>
+            <ProfileHeader title="个人信息" :user-view=true :return=true></ProfileHeader>
           </template>
           <el-form>
               <el-form-item label="姓名:">

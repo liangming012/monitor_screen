@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 from core.permissions import Permissions
 
@@ -36,3 +36,8 @@ class UserInDBBase(UserBase):
 class User(UserInDBBase):
     pass
 
+
+# API返回用户信息
+class Users(BaseModel):
+    records: List[User]
+    total: int

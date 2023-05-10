@@ -2,7 +2,7 @@
     <div>
         <el-card class="box-card">
           <template #header>
-            <ProfileHeader title="修改密码" :user-password=true></ProfileHeader>
+            <ProfileHeader title="修改密码" :user-password=true :return=true></ProfileHeader>
           </template>
             <el-form :model="form" :rules="rules" ref="ruleFormRef" label-position="right" label-width="8rem">
               <el-form-item label="旧密码:" prop="oldPassword">

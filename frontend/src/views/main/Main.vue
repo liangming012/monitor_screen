@@ -12,10 +12,10 @@
                         </el-icon>
                       </div>
                     </el-col>
-                    <el-col :offset="1" :span="3">
+                    <el-col :offset="0" :span="3">
                         <p class="system-name">监控屏管理系统</p>
                     </el-col>
-                    <el-col :offset="13" :span="6">
+                    <el-col :offset="14" :span="6">
                         <el-dropdown>
                           <p>
                             <el-button type="primary">
@@ -32,18 +32,17 @@
                     </el-col>
                 </el-row>
             </el-header>
-
             <el-container style="overflow: auto">
                 <!-- 菜单 -->
                 <el-aside>
-                    <el-menu router :default-active="activePath" class="el-menu-vertical-demo" :collapse="isCollapse">
-                      <el-menu-item index="/main" @click="saveActiveNav('/main')">
+                    <el-menu :router=true :default-active="router.currentRoute.value.path" class="el-menu-vertical-demo" :collapse="isCollapse">
+                      <el-menu-item index="/main/dashboard">
                           <el-icon>
                               <house />
                           </el-icon>
                           <span>首页</span>
                       </el-menu-item>
-                      <el-menu-item index="/users" @click="saveActiveNav('/users')">
+                      <el-menu-item index="/main/user/list">
                         <el-icon><user /></el-icon>
                         <template #title>用户管理</template>
                       </el-menu-item>
@@ -80,11 +79,9 @@
                         <!-- 主要内容 -->
                         <router-view></router-view>
                     </el-main>
-                    <el-footer>
-                      <p>Copyright © 2023-2033 <el-tag>作者邮箱：liangming012@gmail.com</el-tag></p>
-                    </el-footer>
                 </el-container>
             </el-container>
+          <Footer></Footer>
         </el-container>
     </div>
 </template>
@@ -92,18 +89,10 @@
 import { onBeforeMount, ref } from 'vue';
 import {useMainStore} from "../../store/main-store.ts";
 import router from "../../router/index.ts";
+import Footer from "../../components/Footer.vue";
 const store = useMainStore();
-// 挂载 DOM 之前，获取默认菜单链接的激活路径
-onBeforeMount(() => {
-    activePath.value = sessionStorage.getItem("activePath") ? sessionStorage.getItem("activePath") : "/main"
-})
 let isCollapse = ref(false); //默认展开菜单
-let activePath = ref("");  //保存菜单链接的激活路径
-// 保存菜单链接的激活状态
-const saveActiveNav = (path) => {
-    sessionStorage.setItem("activePath", path);
-    activePath.value = path;
-}
+
 const logout = () => {
     store.actionLogOut()
 }
@@ -142,14 +131,5 @@ const logout = () => {
 .el-aside {
   background: white;
   width: auto !important;
-}
-.el-footer {
-  color: #cccccc;
-  text-align: center;
-  line-height: 60px;
-}
-
-.el-footer:hover {
-  color: #2661ef;
 }
 </style>

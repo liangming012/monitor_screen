@@ -1,30 +1,36 @@
-from typing import Any, List
+from typing import Any
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
 from api import deps
-from core.security import get_password_hash, verify_password
+from core.security import verify_password
 from crud.crud_user import crud_user
 from models.user_model import UserModel
 from schemas.msg import Msg
-from schemas.user import User, UserUpdate, UserCreate
+from schemas.user import User, UserUpdate, UserCreate, Users
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[User])
+@router.get("/", response_model=Users)
 def get_users(
     db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
+    name: str = '',
+    current: int = 1,
+    size: int = 10,
     current_user: UserModel = Depends(deps.super_user),
 ) -> Any:
     """
     获取用户列表
     """
-    users = crud_user.get_multi(db, skip=skip, limit=limit)
-    return users
+    total = crud_user.get_users_cout(db, name=name)
+
+    if total:
+        users = crud_user.get_users(db, name=name, skip=(current - 1) * size, limit=size)
+    else:
+        users = []
+    return Users(records=users, total=len(users))
 
 
 @router.put("/me", response_model=User)
