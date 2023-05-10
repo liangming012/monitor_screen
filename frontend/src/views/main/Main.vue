@@ -38,7 +38,7 @@
                     <el-menu :router=true :default-active="router.currentRoute.value.path" class="el-menu-vertical-demo" :collapse="isCollapse">
                       <template v-for="menu in menuList" :key="menu.id">
                         <!-- 如果没有子菜单-->
-                        <el-menu-item v-show="menu.children.length === 0" :index="menu.index">
+                        <el-menu-item v-show="menu.children.length === 0" :index="menu.index" @click="saveActiveNav(menu.index)">
                             <component v-if="menu.icon" :class="!isCollapse? 'icons': ''" :is="menu.icon"></component>
                           <span>{{menu.name}}</span>
                         </el-menu-item>
@@ -93,6 +93,18 @@ const menuList = ref([
       {"id": "4-2", "name": "报警列表", "icon": "", "index": "/main/notice/notice-list"},
     ]},
 ])
+// 挂载 DOM 之前，默认菜单激活链接
+onBeforeMount(() => {
+  activePath.value = sessionStorage.getItem("activePath")
+      ? sessionStorage.getItem("activePath")
+      : "/main/dashboard"
+})
+let activePath = ref("");
+// 保存链接的激活状态，解决某些添加页面不在菜单路径里菜单不高亮的问题
+const saveActiveNav = (path) => {
+  sessionStorage.setItem("activePath", path);
+  activePath.value = path;
+}
 const logout = () => {
     store.actionLogOut()
 }
