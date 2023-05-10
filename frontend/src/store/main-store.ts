@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import {MainState} from "../interfaces/index";
 import {user} from "../api/user";
-import {getLocalToken, removeLocalToken, saveLocalToken} from "../utils/storage/localStorage";
 import router from "../router";
 import {AxiosError} from "axios";
 import {ElMessage} from "element-plus";
+import {getToken, removeToken, saveToken} from "../utils/cookie/cookie";
 
 
 export const useMainStore = defineStore('main', {
@@ -24,7 +24,7 @@ export const useMainStore = defineStore('main', {
         const response = await user.logInGetToken(payload.username, payload.password);
         this.token = response.data.access_token;
         if (this.token) {
-          saveLocalToken(this.token);
+          saveToken(this.token);
           await this.actionGetUserProfile();
           await router.push('/main');
           ElMessage.success('登录成功！');
@@ -59,7 +59,7 @@ export const useMainStore = defineStore('main', {
     },
     async actionCheckLoggedIn() {
       if (!this.token) {
-          this.token = getLocalToken();
+          this.token = getToken();
         }
       if(this.token){
         if(!this.userProfile){
@@ -71,7 +71,7 @@ export const useMainStore = defineStore('main', {
     },
     async clearData() {
       sessionStorage.clear(); // 清楚菜单链接路径等内容
-      removeLocalToken();
+      removeToken();
       this.token = '';
       if(router.currentRoute.value.name !== 'login'){
         await router.push('/login');
