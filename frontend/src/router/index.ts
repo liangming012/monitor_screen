@@ -81,7 +81,7 @@ const  routes = [
         ],
     },
     {
-        path: '/:not_found_path(.*)', redirect: '/',
+        path: '/:not_found_path(.*)', redirect: '/main',
     },
 ];
 

@@ -62,7 +62,9 @@ export const useMainStore = defineStore('main', {
           this.token = getLocalToken();
         }
       if(this.token){
-        await this.actionGetUserProfile()
+        if(!this.userProfile){
+          await this.actionGetUserProfile()
+        }
       }else{
         await this.clearData();
       }
