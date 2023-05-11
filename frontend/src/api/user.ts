@@ -21,14 +21,16 @@ export const user = {
     async getUsers(data) {
         return http.get<IUserProfile[]>(`users/`, data);
     },
-    async updateUser(userId: number, data) {
+    async getUser(userId: string) {
+        return http.get(`users/${userId}`, {});
+    },
+    async updateUser(userId: string, data) {
         return http.put(`users/${userId}`, data);
     },
     async createUser(data) {
         return http.post(`users/`, data);
-    }
-    ,
-    async deleteUser(userId: number) {
-        return http.post(`users/${userId}` );
+    },
+    async deleteUser(userId: string) {
+        return http.del(`users/${userId}`, {});
     }
 }

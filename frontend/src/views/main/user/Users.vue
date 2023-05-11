@@ -39,8 +39,7 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteUser(scope.row.id)">删除</el-button>
-              <el-button size="small"
-                         @click="() => router.push({ path: '/user/edit', query: { id: scope.row.id } })">编辑</el-button>
+              <el-button size="small" @click="router.push('/main/user/edit/' + scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -101,8 +100,8 @@ const deleteUser = (id) => {
         type: 'warning',
       }
   ).then(async () => {
-    const res = await user.deleteUser({ id: id });
-    if (res.data.success) {
+    const res = await user.deleteUser(id);
+    if (res.data.msg) {
       ElMessage.success("删除成功")
       await getUserList();
     } else {

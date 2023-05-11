@@ -59,7 +59,7 @@ const  routes = [
                             },
                             {
                                 path: 'edit/:id',
-                                // component: () => import('../views/main/admin/EditUser.vue'),
+                                component: () => import('../views/main/user/EditUser.vue'),
                             },
                             {
                                 path: 'add',

@@ -111,7 +111,7 @@ def update_user(
     return user
 
 
-@router.delete("/{user_id}", response_model=User)
+@router.delete("/{user_id}", response_model=Msg)
 def delete_user_by_id(
     user_id: int,
     current_user: UserModel = Depends(deps.super_user),
@@ -120,7 +120,7 @@ def delete_user_by_id(
     """
     删除用户
     """
-    user = crud_user.get(db, unique_id=Msg)
+    user = crud_user.get(db, unique_id=user_id)
     if not user:
         raise HTTPException(
             status_code=404,
