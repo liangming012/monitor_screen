@@ -7,7 +7,7 @@
       <el-breadcrumb-item v-if="props.userPassword">修改密码</el-breadcrumb-item>
     </el-breadcrumb>
     <span>{{props.title}}</span>
-    <el-button v-if="props.return" style="float:right" @click="router.push('/main')">返回</el-button>
+    <el-button v-if="props.return" style="float:right" @click="router.push({name: 'main'})">返回</el-button>
   </el-row>
 </template>
 <script setup lang="ts">

@@ -1,12 +1,12 @@
 <template>
   <el-row type="flex" justify="space-between">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item><router-link to="/main/dashboard">用户管理</router-link></el-breadcrumb-item>
+      <el-breadcrumb-item><router-link to="/main/user/list">用户管理</router-link></el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.userList">用户列表</el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.userAdd">添加用户</el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.userEdit">编辑用户</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-button v-if="props.return" style="float:right" @click="router.push('/main/user/list')">返回</el-button>
+    <el-button v-if="props.return" style="float:right" @click="router.push({name: 'users', query: router.currentRoute.value.query})">返回</el-button>
   </el-row>
 </template>
 <script setup lang="ts">

@@ -36,14 +36,17 @@ const  routes = [
                         children: [
                             {
                                 path: 'view',
+                                name: 'profileView',
                                 component: () => import('../views/main/profile/UserProfile.vue'),
                             },
                             {
                                 path: 'edit',
+                                name: 'profileEdit',
                                 component: () => import('../views/main/profile/UserProfileEdit.vue'),
                             },
                             {
                                 path: 'password',
+                                name: 'profilePassword',
                                 component: () => import('../views/main/profile/UserProfilePassword.vue'),
                             },
                         ],
@@ -55,14 +58,18 @@ const  routes = [
                         children: [
                             {
                                 path: 'list',
+                                name: 'users',
                                 component: () => import('../views/main/user/Users.vue'),
                             },
                             {
                                 path: 'edit/:id',
+                                name: 'editUser',
                                 component: () => import('../views/main/user/EditUser.vue'),
+                                props: true,
                             },
                             {
                                 path: 'add',
+                                name: 'addUser',
                                 component: () => import('../views/main/user/AddUser.vue'),
                             },
                         ],

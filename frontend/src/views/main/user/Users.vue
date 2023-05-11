@@ -5,7 +5,7 @@
         <UserHeader :user-list=true></UserHeader>
       </template>
       <el-row type="flex" justify="space-between">
-        <el-button type="primary" @click="router.push('/main/user/add')">添加用户</el-button>
+        <el-button type="primary" @click="router.push({name:'addUser', query:searchForm})">添加用户</el-button>
         <el-input style="width:20rem;" @blur="searchUser" @clear="searchUser" clearable v-model.trim="searchForm.name" placeholder="请输入用户姓名">
           <template #append>
             <el-button icon="Search" @click="searchUser" />
@@ -39,7 +39,7 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteUser(scope.row.id)">删除</el-button>
-              <el-button size="small" @click="router.push('/main/user/edit/' + scope.row.id)">编辑</el-button>
+              <el-button size="small" @click="router.push({name: 'editUser', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -62,7 +62,9 @@ import {onMounted, reactive, ref} from "vue";
 import {user} from "../../../api/user.ts";
 import router from "../../../router/index.ts";
 // Dom 挂载之后
-onMounted(() => {getUserList();})
+onMounted(() => {
+  initSearchForm();
+  getUserList();})
 // 用户数据
 let tableData = ref([]);
 let total = ref(0);
@@ -72,6 +74,19 @@ const searchForm = reactive({
   size: 10,
   name: ''
 })
+
+const initSearchForm = ()=>{
+  if(JSON.stringify(router.currentRoute.value.query)!=="{}"){
+    if(router.currentRoute.value.query.current){
+      searchForm.current = parseInt(router.currentRoute.value.query.current);
+    }
+    if(router.currentRoute.value.query.size){
+      searchForm.size = parseInt(router.currentRoute.value.query.size);
+    }
+    searchForm.name = router.currentRoute.value.query.name;
+  }
+  // await router.push({name:'users', query: router.currentRoute.value.query})
+}
 // 获取用户列表
 const getUserList = async () => {
   const res = await user.getUsers(searchForm);

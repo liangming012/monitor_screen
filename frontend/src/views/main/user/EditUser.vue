@@ -49,9 +49,9 @@ const form = reactive({
 });
 
 onMounted(() => {getUserList();})
-
+const props = defineProps({id:String});
 const getUserList = async () => {
-  const res = await user.getUser(getLastItem(router.currentRoute.value.path));
+  const res = await user.getUser(props.id);
   form.fullName = res.data.full_name;
   form.email = res.data.email;
   form.isActive = res.data.is_active;
@@ -82,7 +82,7 @@ const onSubmit = () => {
   ruleFormRef.value.validate(async (valid) => {
     if (valid) {  // 表单验证通过
       const response = await api.updateUser(
-          getLastItem(router.currentRoute.value.path),
+          props.id,
           {full_name: form.fullName,
                 email: form.email,
                 password: form.password,
@@ -90,7 +90,7 @@ const onSubmit = () => {
                 roles: form.roles.toString().replace('管理员', '10001').replace('普通用户', '10002'),
           });
       if (response.data) {
-        await router.push('/main/user/list')
+        await router.push({name:'users', query: router.currentRoute.value.query})
         ElMessage.success('编辑用户成功！');
       }else {
         ElMessage.error(response.data.detail);

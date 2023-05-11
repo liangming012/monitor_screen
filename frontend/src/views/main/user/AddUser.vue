@@ -69,7 +69,7 @@ const onSubmit = () => {
                 roles: form.roles.toString().replace('管理员', '10001').replace('普通用户', '10002'),
           });
       if (response.data) {
-        await router.push('/main/user/list')
+        await router.push({name:'users', query: router.currentRoute.value.query})
         ElMessage.success('添加用户成功！');
       }else {
         ElMessage.error(response.data.detail);
