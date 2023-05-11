@@ -1,5 +1,5 @@
 import http from '../utils/http/http.js'
-import {IUserProfile, IUserProfileCreate, IUserProfileUpdate} from "../interfaces";
+import {IUserProfile} from "../interfaces";
 
 export const user = {
     async logInGetToken(username: string, password: string) {
@@ -15,16 +15,16 @@ export const user = {
     async getMe() {
         return http.get<IUserProfile>('users/me', {})
     },
-    async updateMe(data: IUserProfileUpdate) {
+    async updateMe(data) {
         return http.put<IUserProfile>(`users/me`, data);
     },
     async getUsers(data) {
         return http.get<IUserProfile[]>(`users/`, data);
     },
-    async updateUser(userId: number, data: IUserProfileUpdate) {
+    async updateUser(userId: number, data) {
         return http.put(`users/${userId}`, data);
     },
-    async createUser(data: IUserProfileCreate) {
+    async createUser(data) {
         return http.post(`users/`, data);
     }
     ,

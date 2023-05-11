@@ -67,10 +67,7 @@ const resetForm = () => {   // 重置表单
 </script>
 
 <style scoped>
-.form-content{
-  margin: 0 auto;
-}
 .el-form-item{
-  max-width: 20rem;
+  max-width: 30rem;
 }
 </style>

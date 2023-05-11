@@ -25,12 +25,11 @@ def get_users(
     获取用户列表
     """
     total = crud_user.get_users_cout(db, name=name)
-
     if total:
         users = crud_user.get_users(db, name=name, skip=(current - 1) * size, limit=size)
     else:
         users = []
-    return Users(records=users, total=len(users))
+    return Users(records=users, total=total)
 
 
 @router.put("/me", response_model=User)

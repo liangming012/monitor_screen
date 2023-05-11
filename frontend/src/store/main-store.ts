@@ -58,9 +58,7 @@ export const useMainStore = defineStore('main', {
       }
     },
     async actionCheckLoggedIn() {
-      if (!this.token) {
-          this.token = getToken();
-        }
+      this.token = getToken();
       if(this.token){
         if(!this.userProfile){
           await this.actionGetUserProfile()

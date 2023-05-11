@@ -23,6 +23,7 @@ class CRUDUser(CRUDBase):
 
     def create(self, db: Session, obj_in: UserCreate) -> UserModel:
         db_obj = UserModel(
+            is_active=obj_in.is_active,
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
             full_name=obj_in.full_name,
