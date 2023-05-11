@@ -39,13 +39,17 @@
                       <template v-for="menu in menuList" :key="menu.id">
                         <!-- 如果没有子菜单-->
                         <el-menu-item v-show="menu.children.length === 0" :index="menu.index" @click="saveActiveNav(menu.index)">
-                            <component v-if="menu.icon" :class="!isCollapse? 'icons': ''" :is="menu.icon"></component>
+                          <i class="el-icon">
+                            <component v-if="menu.icon" :is="menu.icon"></component>
+                          </i>
                           <span>{{menu.name}}</span>
                         </el-menu-item>
                         <!-- 如果有子菜单-->
                         <el-sub-menu v-show="menu.children.length > 0" :index="menu.index">
                           <template #title>
-                            <component v-if="menu.icon" :class="!isCollapse? 'icons': ''" :is="menu.icon"></component>
+                            <i class="el-icon">
+                              <component v-if="menu.icon" :is="menu.icon"></component>
+                            </i>
                             <span>{{menu.name}}</span>
                           </template>
                           <el-menu-item v-for="childMenu in menu.children"  :key="childMenu.id"  :index="childMenu.index">
@@ -78,8 +82,8 @@ const store = useMainStore();
 let isCollapse = ref(false); //默认展开菜单
 // 菜单配置
 const menuList = ref([
-  {"id":'1' , "name": "首页", "icon": "house", "index": "/main/dashboard", "children":[]},
-  {"id":'2' , "name": "用户管理", "icon": "user", "index": "/main/user/list", "children":[]},
+  {"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
+  {"id":'2' , "name": "用户管理", "icon": "User", "index": "/main/user/list", "children":[]},
   {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/main/project", "children":[
       {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/project-list"},
       {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/project/record-list"},
@@ -111,10 +115,6 @@ const logout = () => {
 </script>
 
 <style scoped>
-.icons{
-  width: 50%;
-  height: 50%;
-}
 .home-container {
   position: absolute;
   height: 100%;
