@@ -77,18 +77,22 @@ const  routes = [
                     {
                         path: 'project',
                         name: 'project',
-                        redirect: '/main/project/project-list',
+                        redirect: '/main/project/list',
                         children: [
                             {
-                                path: 'project-list',
-                                component: () => import('../views/main/user/Users.vue'),
+                                path: 'list',
+                                name: 'projects',
+                                component: () => import('../views/main/project/Projects.vue'),
                             },
                             {
                                 path: 'edit/:id',
+                                name: 'editProject',
                                 // component: () => import('../views/main/admin/EditUser.vue'),
+                                props: true,
                             },
                             {
                                 path: 'add',
+                                name: 'addProject',
                                 // component: () => import('../views/main/user/AddUser.vue'),
                             },
                         ],

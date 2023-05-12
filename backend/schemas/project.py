@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -34,3 +34,8 @@ class ProjectInDBBase(ProjectBase):
 class Project(ProjectInDBBase):
     pass
 
+
+# API返回用户信息
+class Projects(BaseModel):
+    records: List[Project]
+    total: int

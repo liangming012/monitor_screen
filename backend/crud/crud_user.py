@@ -9,7 +9,7 @@ from core.security import get_password_hash, verify_password
 
 class CRUDUser(CRUDBase):
 
-    def get_users_cout(self, db: Session, name='') -> int:
+    def get_users_count(self, db: Session, name='') -> int:
         return db.query(self.model).filter(UserModel.full_name.like(f'%{name}%')).count()
 
     def get_users(self, db: Session, name='', skip: int = 0, limit: int = 100) -> List[Any]:

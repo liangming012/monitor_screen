@@ -53,7 +53,9 @@
                             <span>{{menu.name}}</span>
                           </template>
                           <el-menu-item v-for="childMenu in menu.children"  :key="childMenu.id"  :index="childMenu.index">
-                            <component v-if="childMenu.icon" :class="!isCollapse? 'icons': ''" :is="childMenu.icon"></component>
+                            <i class="el-icon">
+                              <component v-if="childMenu.icon" :is="childMenu.icon"></component>
+                            </i>
                             <span>{{childMenu.name}}</span>
                           </el-menu-item>
                         </el-sub-menu>
@@ -85,8 +87,8 @@ const menuList = ref([
   {"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
   {"id":'2' , "name": "用户管理", "icon": "User", "index": "/main/user/list", "children":[]},
   {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/main/project", "children":[
-      {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/project-list"},
-      {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/project/record-list"},
+      {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/list"},
+      {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/record/list"},
     ]},
   {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/main/screen", "children":[
       {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/screen-list"},

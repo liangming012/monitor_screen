@@ -2,11 +2,11 @@
   <div>
     <el-card class="box-card">
       <template #header>
-        <UserHeader :list=true></UserHeader>
+        <ProjectHeader :list=true></ProjectHeader>
       </template>
       <el-row type="flex" justify="space-between">
-        <el-button type="primary" @click="router.push({name:'addUser', query:searchForm})">添加用户</el-button>
-        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" clearable v-model.trim="searchForm.name" placeholder="请输入用户姓名">
+        <el-button type="primary" @click="router.push({name:'addProject', query:searchForm})">添加项目</el-button>
+        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" clearable v-model.trim="searchForm.name" placeholder="请输入项目名称">
           <template #append>
             <el-button icon="Search" @click="searchAction" />
           </template>
@@ -15,25 +15,18 @@
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">
           <el-table-column prop="id" label="ID"/>
-          <el-table-column prop="full_name" label="姓名"/>
-          <el-table-column prop="email" label="邮箱"/>
-          <el-table-column  prop="is_active" label="是否激活">
+          <el-table-column prop="name" label="项目名称"/>
+          <el-table-column prop="duration_limit" label="持续时间"/>
+          <el-table-column prop="jenkins_url" label="Jenkins URL"/>
+          <el-table-column  prop="enable" label="是否启用">
             <template #default="scope">
               <el-switch
-                  v-model="scope.row.is_active"
+                  v-model="scope.row.enable"
                   inline-prompt
                   active-text="是"
                   inactive-text="否"
                   disabled
               />
-            </template>
-          </el-table-column>
-          <el-table-column prop="roles" label="角色">
-            <template #default="scope">
-              <template v-for="role in scope.row.roles.split(',')">
-                <el-tag v-show="role==='10001'">管理员</el-tag>
-                <el-tag v-show="role==='10002'">普通用户</el-tag>
-              </template>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -56,11 +49,12 @@
 </template>
 
 <script setup>
-import UserHeader from "../../../components/user/UserHeader.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {onMounted, reactive, ref} from "vue";
 import {user} from "../../../api/user.ts";
 import router from "../../../router/index.ts";
+import ProjectHeader from "../../../components/project/ProjectHeader.vue";
+import {Project as project} from "../../../api/project.ts";
 // Dom 挂载之后
 onMounted(() => {
   initSearchForm();
@@ -88,7 +82,7 @@ const initSearchForm = ()=>{
 }
 // 获取列表
 const getListAction = async () => {
-  const res = await user.getUsers(searchForm);
+  const res = await project.getProjects(searchForm);
   tableData.value = res.data.records;
   total.value = res.data.total;
 }
