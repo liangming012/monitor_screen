@@ -32,7 +32,7 @@
           <el-table-column label="操作"  width="160px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
-              <el-button size="small" @click="router.push({name: 'editUser', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
+              <el-button size="small" @click="router.push({name: 'editProject', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -51,10 +51,9 @@
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
 import {onMounted, reactive, ref} from "vue";
-import {user} from "../../../api/user.ts";
 import router from "../../../router/index.ts";
 import ProjectHeader from "../../../components/project/ProjectHeader.vue";
-import {Project as project} from "../../../api/project.ts";
+import {project as api} from "../../../api/project.ts";
 // Dom 挂载之后
 onMounted(() => {
   initSearchForm();
@@ -82,7 +81,7 @@ const initSearchForm = ()=>{
 }
 // 获取列表
 const getListAction = async () => {
-  const res = await project.getProjects(searchForm);
+  const res = await api.getProjects(searchForm);
   tableData.value = res.data.records;
   total.value = res.data.total;
 }
@@ -108,7 +107,7 @@ const deleteAction = (id) => {
         type: 'warning',
       }
   ).then(async () => {
-    const res = await user.deleteUser(id);
+    const res = await api.deleteProject(id);
     if (res.data.msg) {
       ElMessage.success("删除成功")
       await getListAction();

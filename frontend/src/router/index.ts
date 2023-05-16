@@ -87,13 +87,13 @@ const  routes = [
                             {
                                 path: 'edit/:id',
                                 name: 'editProject',
-                                // component: () => import('../views/main/admin/EditUser.vue'),
+                                component: () => import('../views/main/project/EditProject.vue'),
                                 props: true,
                             },
                             {
                                 path: 'add',
                                 name: 'addProject',
-                                // component: () => import('../views/main/user/AddUser.vue'),
+                                component: () => import('../views/main/project/AddProject.vue'),
                             },
                         ],
                     },

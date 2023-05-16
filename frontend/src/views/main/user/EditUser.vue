@@ -36,10 +36,9 @@
 <script setup>
 import UserHeader from "../../../components/user/UserHeader.vue";
 import {onMounted, reactive, ref} from "vue";
-import {user, user as api} from "../../../api/user.ts";
+import {user as api} from "../../../api/user.ts";
 import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
-import {getLastItem} from "../../../utils/common.ts";
 const form = reactive({
   fullName: '',
   email: '',
@@ -51,7 +50,7 @@ const form = reactive({
 onMounted(() => {getUserList();})
 const props = defineProps({id:String});
 const getUserList = async () => {
-  const res = await user.getUser(props.id);
+  const res = await api.getUser(props.id);
   form.fullName = res.data.full_name;
   form.email = res.data.email;
   form.isActive = res.data.is_active;

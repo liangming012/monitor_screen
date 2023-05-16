@@ -1,7 +1,6 @@
 import http from '../utils/http/http.js'
-import {IProjectProfile} from "../interfaces";
 
-export const Project = {
+export const project = {
     async getProjects(data) {
         return http.get(`projects/`, data);
     },

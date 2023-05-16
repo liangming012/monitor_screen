@@ -1,79 +1,77 @@
 <template>
-    <div>
-        <el-container class="home-container">
-            <!-- header -->
-            <el-header>
-                <el-row>
-                    <el-col :span="1">
-                      <div class="toggle-button" @click="isCollapse = !isCollapse">
-                        <el-icon :size="60">
-                          <Expand v-if="isCollapse" />
-                          <Fold v-if="!isCollapse" />
-                        </el-icon>
-                      </div>
-                    </el-col>
-                    <el-col :offset="0" :span="3">
-                        <p class="system-name">监控屏管理系统</p>
-                    </el-col>
-                    <el-col :offset="14" :span="6">
-                        <el-dropdown>
-                          <p>
-                            <el-button type="primary">
-                              {{store.userProfile.full_name}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                            </el-button>
-                          </p>
-                          <template #dropdown>
-                              <el-dropdown-menu>
-                                <el-dropdown-item @click.native="router.push('/main/profile/view')">个人信息</el-dropdown-item>
-                                  <el-dropdown-item @click.native="logout">退出系统</el-dropdown-item>
-                              </el-dropdown-menu>
-                          </template>
-                        </el-dropdown>
-                    </el-col>
-                </el-row>
-            </el-header>
-            <el-container style="overflow: auto">
-                <!-- 菜单 -->
-                <el-aside>
-                    <el-menu :router=true :default-active="router.currentRoute.value.path" class="el-menu-vertical-demo" :collapse="isCollapse">
-                      <template v-for="menu in menuList" :key="menu.id">
-                        <!-- 如果没有子菜单-->
-                        <el-menu-item v-show="menu.children.length === 0" :index="menu.index" @click="saveActiveNav(menu.index)">
-                          <i class="el-icon">
-                            <component v-if="menu.icon" :is="menu.icon"></component>
-                          </i>
-                          <span>{{menu.name}}</span>
-                        </el-menu-item>
-                        <!-- 如果有子菜单-->
-                        <el-sub-menu v-show="menu.children.length > 0" :index="menu.index">
-                          <template #title>
-                            <i class="el-icon">
-                              <component v-if="menu.icon" :is="menu.icon"></component>
-                            </i>
-                            <span>{{menu.name}}</span>
-                          </template>
-                          <el-menu-item v-for="childMenu in menu.children"  :key="childMenu.id"  :index="childMenu.index">
-                            <i class="el-icon">
-                              <component v-if="childMenu.icon" :is="childMenu.icon"></component>
-                            </i>
-                            <span>{{childMenu.name}}</span>
-                          </el-menu-item>
-                        </el-sub-menu>
-                      </template>
-                    </el-menu>
-                </el-aside>
-                <el-container>
-                    <el-main>
-                        <!-- 面包屑 -->
-                        <!-- <Breadcrumb /> -->
-                        <!-- 主要内容 -->
-                        <router-view></router-view>
-                    </el-main>
-                </el-container>
-            </el-container>
-          <Footer></Footer>
-        </el-container>
-    </div>
+  <el-container class="home-container">
+      <!-- header -->
+      <el-header>
+          <el-row>
+              <el-col :span="1">
+                <div class="toggle-button" @click="isCollapse = !isCollapse">
+                  <el-icon :size="60">
+                    <Expand v-if="isCollapse" />
+                    <Fold v-if="!isCollapse" />
+                  </el-icon>
+                </div>
+              </el-col>
+              <el-col :offset="0" :span="3">
+                  <p class="system-name">监控屏管理系统</p>
+              </el-col>
+              <el-col :offset="14" :span="6">
+                  <el-dropdown>
+                    <p>
+                      <el-button type="primary">
+                        {{store.userProfile.full_name}}<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                      </el-button>
+                    </p>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                          <el-dropdown-item @click.native="router.push('/main/profile/view')">个人信息</el-dropdown-item>
+                            <el-dropdown-item @click.native="logout">退出系统</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+              </el-col>
+          </el-row>
+      </el-header>
+      <el-container style="overflow: auto">
+          <!-- 菜单 -->
+          <el-aside>
+              <el-menu :router=true :default-active="router.currentRoute.value.path" class="el-menu-vertical-demo" :collapse="isCollapse">
+                <template v-for="menu in menuList" :key="menu.id">
+                  <!-- 如果没有子菜单-->
+                  <el-menu-item v-show="menu.children.length === 0" :index="menu.index" @click="saveActiveNav(menu.index)">
+                    <i class="el-icon">
+                      <component v-if="menu.icon" :is="menu.icon"></component>
+                    </i>
+                    <span>{{menu.name}}</span>
+                  </el-menu-item>
+                  <!-- 如果有子菜单-->
+                  <el-sub-menu v-show="menu.children.length > 0" :index="menu.index">
+                    <template #title>
+                      <i class="el-icon">
+                        <component v-if="menu.icon" :is="menu.icon"></component>
+                      </i>
+                      <span>{{menu.name}}</span>
+                    </template>
+                    <el-menu-item v-for="childMenu in menu.children"  :key="childMenu.id"  :index="childMenu.index">
+                      <i class="el-icon">
+                        <component v-if="childMenu.icon" :is="childMenu.icon"></component>
+                      </i>
+                      <span>{{childMenu.name}}</span>
+                    </el-menu-item>
+                  </el-sub-menu>
+                </template>
+              </el-menu>
+          </el-aside>
+          <el-container>
+              <el-main>
+                  <!-- 面包屑 -->
+                  <!-- <Breadcrumb /> -->
+                  <!-- 主要内容 -->
+                  <router-view></router-view>
+              </el-main>
+          </el-container>
+      </el-container>
+    <Footer></Footer>
+  </el-container>
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';

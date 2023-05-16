@@ -36,7 +36,6 @@
 <script setup>
 import UserHeader from "../../../components/user/UserHeader.vue";
 import {reactive, ref} from "vue";
-import {useMainStore} from "../../../store/main-store.ts";
 import {user as api} from "../../../api/user.ts";
 import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
