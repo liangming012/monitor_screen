@@ -34,7 +34,6 @@ const copy = ()=>{
 .el-footer {
   color: #cccccc;
   text-align: center;
-  line-height: 60px;
 }
 
 .el-footer:hover {
