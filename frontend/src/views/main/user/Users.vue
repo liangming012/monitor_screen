@@ -36,7 +36,7 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column label="操作" width="160px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
               <el-button size="small" @click="router.push({name: 'editUser', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
