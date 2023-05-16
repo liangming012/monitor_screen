@@ -29,6 +29,18 @@ def get_projects(
     return Projects(records=projects, total=total)
 
 
+@router.get("/list", response_model=List[Project])
+def project_list(
+    db: Session = Depends(deps.get_db),
+    current_user: UserModel = Depends(deps.active_user),
+) -> Any:
+    """
+    获取项目列表
+    """
+    projects = crud_project.list(db)
+    return projects
+
+
 @router.get("/{project_id}", response_model=Project)
 def read_project_by_id(
     project_id: int,

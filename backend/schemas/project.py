@@ -35,7 +35,7 @@ class Project(ProjectInDBBase):
     pass
 
 
-# API返回用户信息
+# API返回项目信息
 class Projects(BaseModel):
     records: List[Project]
     total: int

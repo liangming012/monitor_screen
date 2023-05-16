@@ -97,6 +97,29 @@ const  routes = [
                             },
                         ],
                     },
+                    {
+                        path: 'record',
+                        name: 'record',
+                        redirect: '/main/record/list',
+                        children: [
+                            {
+                                path: 'list',
+                                name: 'records',
+                                component: () => import('../views/main/record/Records.vue'),
+                            },
+                            {
+                                path: 'edit/:id',
+                                name: 'editRecord',
+                                component: () => import('../views/main/record/EditRecord.vue'),
+                                props: true,
+                            },
+                            {
+                                path: 'add',
+                                name: 'addRecord',
+                                component: () => import('../views/main/record/AddRecord.vue'),
+                            },
+                        ],
+                    },
                 ],
             },
         ],

@@ -1,5 +1,5 @@
 import time
-from typing import Dict, Union
+from typing import Dict, Union, List, Any
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
 from models.record_model import RecordModel
@@ -7,6 +7,15 @@ from schemas.record import Record, RecordCreate
 
 
 class CRUDRecord(CRUDBase):
+
+    def get_records_count(self, db: Session, project_id='') -> int:
+        return db.query(self.model).where(RecordModel.project_id == project_id).count()
+
+    def get_records(self, db: Session, project_id='', skip: int = 0, limit: int = 100) -> List[Any]:
+        if project_id:
+            return db.query(self.model).where(RecordModel.project_id == project_id).offset(skip).limit(limit).all()
+        else:
+            return db.query(self.model).offset(skip).limit(limit).all()
 
     def create(self, db: Session, obj_in: RecordCreate) -> RecordModel:
         db_obj = RecordModel(
