@@ -9,9 +9,9 @@
         <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction" @blur="searchAction">
           <el-option
               v-for="project in projects"
-              :key="project.id"
+              :key="project.id.toString()"
               :label="project.name"
-              :value="project.id"
+              :value="project.id.toString()"
           />
         </el-select>
       </el-row>
@@ -21,6 +21,7 @@
           <el-table-column prop="project.name" label="项目名称"/>
           <el-table-column prop="build_id" label="构建ID"/>
           <el-table-column prop="url" label="构建地址"/>
+          <el-table-column prop="duration" label="持续时间"/>
           <el-table-column prop="check_time" label="检查时间">
             <template #default="scope">
               {{getDate(scope.row.check_time)}}
