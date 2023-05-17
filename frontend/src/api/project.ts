@@ -1,6 +1,9 @@
 import http from '../utils/http/http.js'
 
 export const project = {
+    async getList() {
+        return http.get(`projects/list`, {});
+    },
     async getProjects(data) {
         return http.get(`projects/`, data);
     },

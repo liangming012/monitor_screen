@@ -6,11 +6,14 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addRecord', query:searchForm})">添加记录</el-button>
-        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" clearable v-model.trim="searchForm.id" placeholder="请输入项目名称">
-          <template #append>
-            <el-button icon="Search" @click="searchAction" />
-          </template>
-        </el-input>
+        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction" @blur="searchAction">
+          <el-option
+              v-for="project in projects"
+              :key="project.id"
+              :label="project.name"
+              :value="project.id"
+          />
+        </el-select>
       </el-row>
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">
@@ -62,21 +65,25 @@ import router from "../../../router/index.ts";
 import {record as api} from "../../../api/record.ts";
 import RecordHeader from "../../../components/record/RecordHeader.vue";
 import {getDate} from "../../../utils/date/date.ts";
+import {project} from "../../../api/project.ts";
+
 // Dom 挂载之后
 onMounted(() => {
   initSearchForm();
   getListAction();})
 // 表格数据
 let tableData = ref([]);
+let projects = ref([]);
 let total = ref(0);
 // 搜索条件
 const searchForm = reactive({
   current: 1,
   size: 10,
-  id: ''
+  id: null
 })
 
 const initSearchForm = ()=>{
+  getProjects();
   if(JSON.stringify(router.currentRoute.value.query)!=="{}"){
     if(router.currentRoute.value.query.current){
       searchForm.current = parseInt(router.currentRoute.value.query.current);
@@ -87,6 +94,13 @@ const initSearchForm = ()=>{
     searchForm.id = router.currentRoute.value.query.id;
   }
 }
+
+// 获取列表
+const getProjects = async () => {
+  const res = await project.getList();
+  projects.value = res.data;
+}
+
 // 获取列表
 const getListAction = async () => {
   const res = await api.getRecords(searchForm);
