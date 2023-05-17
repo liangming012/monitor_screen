@@ -9,7 +9,10 @@ from schemas.record import Record, RecordCreate
 class CRUDRecord(CRUDBase):
 
     def get_records_count(self, db: Session, project_id='') -> int:
-        return db.query(self.model).where(RecordModel.project_id == project_id).count()
+        if project_id:
+            return db.query(self.model).where(RecordModel.project_id == project_id).count()
+        else:
+            return db.query(self.model).count()
 
     def get_records(self, db: Session, project_id='', skip: int = 0, limit: int = 100) -> List[Any]:
         if project_id:

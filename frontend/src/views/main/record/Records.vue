@@ -2,11 +2,11 @@
   <div>
     <el-card class="box-card">
       <template #header>
-        <ProjectHeader :list=true></ProjectHeader>
+        <RecordHeader :list=true></RecordHeader>
       </template>
       <el-row type="flex" justify="space-between">
-        <el-button type="primary" @click="router.push({name:'addProject', query:searchForm})">添加项目</el-button>
-        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" clearable v-model.trim="searchForm.name" placeholder="请输入项目名称">
+        <el-button type="primary" @click="router.push({name:'addRecord', query:searchForm})">添加记录</el-button>
+        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" clearable v-model.trim="searchForm.id" placeholder="请输入项目名称">
           <template #append>
             <el-button icon="Search" @click="searchAction" />
           </template>
@@ -15,21 +15,28 @@
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">
           <el-table-column prop="id" label="ID"/>
-          <el-table-column prop="name" label="项目名称"/>
-          <el-table-column prop="duration_limit" label="持续时间"/>
-          <el-table-column prop="jenkins_url" label="Jenkins URL"/>
-          <el-table-column  prop="enable" label="是否启用">
+          <el-table-column prop="project.name" label="项目名称"/>
+          <el-table-column prop="build_id" label="构建ID"/>
+          <el-table-column prop="url" label="构建地址"/>
+          <el-table-column prop="check_time" label="检查时间">
             <template #default="scope">
-              <el-switch
-                  v-model="scope.row.enable"
-                  inline-prompt
-                  active-text="是"
-                  inactive-text="否"
-                  disabled
-              />
+              {{getDate(scope.row.check_time)}}
             </template>
           </el-table-column>
-          <el-table-column label="操作"  width="160px">
+          <el-table-column prop="create_time" label="创建时间">
+            <template #default="scope">
+              {{getDate(scope.row.create_time)}}
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="状态">
+            <template #default="scope">
+                <el-tag type="success" v-if="scope.row.status===0">成功</el-tag>
+                <el-tag type="danger" v-else-if="scope.row.status===1">失败</el-tag>
+                <el-tag type="warning" v-else-if="scope.row.status===2">超时</el-tag>
+                <el-tag type="info" v-else>失效</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
               <el-button size="small" @click="router.push({name: 'editProject', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
@@ -52,20 +59,21 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {onMounted, reactive, ref} from "vue";
 import router from "../../../router/index.ts";
-import ProjectHeader from "../../../components/project/ProjectHeader.vue";
-import {project as api} from "../../../api/project.ts";
+import {record as api} from "../../../api/record.ts";
+import RecordHeader from "../../../components/record/RecordHeader.vue";
+import {getDate} from "../../../utils/date/date.ts";
 // Dom 挂载之后
 onMounted(() => {
   initSearchForm();
   getListAction();})
-// 用户数据
+// 表格数据
 let tableData = ref([]);
 let total = ref(0);
 // 搜索条件
 const searchForm = reactive({
   current: 1,
   size: 10,
-  name: ''
+  id: ''
 })
 
 const initSearchForm = ()=>{
@@ -76,12 +84,12 @@ const initSearchForm = ()=>{
     if(router.currentRoute.value.query.size){
       searchForm.size = parseInt(router.currentRoute.value.query.size);
     }
-    searchForm.name = router.currentRoute.value.query.name;
+    searchForm.id = router.currentRoute.value.query.id;
   }
 }
 // 获取列表
 const getListAction = async () => {
-  const res = await api.getProjects(searchForm);
+  const res = await api.getRecords(searchForm);
   tableData.value = res.data.records;
   total.value = res.data.total;
 }
@@ -97,7 +105,7 @@ const searchAction = () => {
   searchForm.current = 1;
   getListAction();
 }
-// 删除用户
+// 删除
 const deleteAction = (id) => {
   ElMessageBox.confirm(
       '确定要删除吗?',
@@ -107,7 +115,7 @@ const deleteAction = (id) => {
         type: 'warning',
       }
   ).then(async () => {
-    const res = await api.deleteProject(id);
+    const res = await api.deleteRecord(id);
     if (res.data.msg) {
       ElMessage.success("删除成功")
       await getListAction();

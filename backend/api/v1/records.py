@@ -15,7 +15,7 @@ router = APIRouter()
 def get_records(
         *,
         db: Session = Depends(deps.get_db),
-        id: str,
+        id: str = '',
         current: int = 1,
         size: int = 10,
         current_user: UserModel = Depends(deps.active_user),

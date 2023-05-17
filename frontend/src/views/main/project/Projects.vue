@@ -29,7 +29,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作"  width="160px">
+          <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
               <el-button size="small" @click="router.push({name: 'editProject', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
@@ -58,7 +58,7 @@ import {project as api} from "../../../api/project.ts";
 onMounted(() => {
   initSearchForm();
   getListAction();})
-// 用户数据
+// 表格数据
 let tableData = ref([]);
 let total = ref(0);
 // 搜索条件
@@ -97,7 +97,7 @@ const searchAction = () => {
   searchForm.current = 1;
   getListAction();
 }
-// 删除用户
+// 删除
 const deleteAction = (id) => {
   ElMessageBox.confirm(
       '确定要删除吗?',
