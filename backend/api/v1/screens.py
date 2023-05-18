@@ -5,24 +5,40 @@ from api import deps
 from crud.crud_screen import crud_screen
 from models.user_model import UserModel
 from schemas.msg import Msg
-from schemas.screen import Screen, ScreenCreate, ScreenUpdate
+from schemas.screen import Screen, ScreenCreate, ScreenUpdate, Screens
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Screen])
-def get_screen(
+@router.get("/", response_model=Screens)
+def get_screens(
         db: Session = Depends(deps.get_db),
-        skip: int = 0,
-        limit: int = 100,
+        name: str = '',
+        current: int = 1,
+        size: int = 10,
         current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取屏幕列表
     """
-    screen = crud_screen.get_multi(db, skip=skip, limit=limit)
-    return screen
+    total = crud_screen.get_screens_count(db, name=name)
+    if total:
+        screens = crud_screen.get_screens(db, name=name, skip=(current - 1) * size, limit=size)
+    else:
+        screens = []
+    return Screens(records=screens, total=total)
 
+
+@router.get("/list", response_model=List[Screen])
+def project_list(
+    db: Session = Depends(deps.get_db),
+    current_user: UserModel = Depends(deps.active_user),
+) -> Any:
+    """
+    获取屏幕列表
+    """
+    projects = crud_screen.list(db)
+    return projects
 
 @router.get("/{screen_id}", response_model=Screen)
 def read_screen_by_id(

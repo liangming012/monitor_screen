@@ -120,6 +120,29 @@ const  routes = [
                             },
                         ],
                     },
+                    {
+                        path: 'screen',
+                        name: 'screen',
+                        redirect: '/main/screen/list',
+                        children: [
+                            {
+                                path: 'list',
+                                name: 'screens',
+                                component: () => import('../views/main/screen/Screens.vue'),
+                            },
+                            {
+                                path: 'edit/:id',
+                                name: 'editScreen',
+                                component: () => import('../views/main/screen/EditScreen.vue'),
+                                props: true,
+                            },
+                            {
+                                path: 'add',
+                                name: 'addScreen',
+                                component: () => import('../views/main/screen/AddScreen.vue'),
+                            },
+                        ],
+                    },
                 ],
             },
         ],

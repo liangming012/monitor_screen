@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -6,7 +6,8 @@ from pydantic import BaseModel
 # 基础属性
 class ScreenBase(BaseModel):
     name: Optional[str] = None
-    show_type: Optional[int] = None
+    row: Optional[int] = None
+    col: Optional[int] = None
 
 
 # 创建屏幕
@@ -31,4 +32,10 @@ class ScreenInDBBase(ScreenBase):
 # API返回屏幕信息
 class Screen(ScreenInDBBase):
     pass
+
+
+# API返回屏幕信息
+class Screens(BaseModel):
+    records: List[Screen]
+    total: int
 

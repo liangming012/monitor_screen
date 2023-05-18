@@ -89,8 +89,8 @@ const menuList = ref([
       {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/record/list"},
     ]},
   {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/main/screen", "children":[
-      {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/screen-list"},
-      {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/screen/show-list"},
+      {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/list"},
+      {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/show/list"},
     ]},
   {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/main/notice", "children":[
       {"id": "4-1", "name": "报警方式", "icon": "", "index": "/main/notice/notice-list"},
