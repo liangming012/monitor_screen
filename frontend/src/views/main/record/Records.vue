@@ -6,7 +6,7 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addRecord', query:searchForm})">添加记录</el-button>
-        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction" @blur="searchAction">
+        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction">
           <el-option
               v-for="project in projects"
               :key="project.id.toString()"
@@ -92,7 +92,9 @@ const initSearchForm = ()=>{
     if(router.currentRoute.value.query.size){
       searchForm.size = parseInt(router.currentRoute.value.query.size);
     }
-    searchForm.id = router.currentRoute.value.query.id.toString();
+    if(router.currentRoute.value.query.id){
+      searchForm.id = router.currentRoute.value.query.id.toString();
+    }
   }
 }
 

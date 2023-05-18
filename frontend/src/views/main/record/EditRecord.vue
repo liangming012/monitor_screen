@@ -124,7 +124,7 @@ const getProject = async () => {
   form.duration = res.data.duration;
   form.status = res.data.status;
   form.url = res.data.url;
-  form.checkTime = res.data.check_time*1000;
+  form.checkTime = new Date(res.data.check_time*1000);
   form.projectId = res.data.project_id.toString();
 }
 const ruleFormRef = ref();

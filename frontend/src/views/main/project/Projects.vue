@@ -76,7 +76,9 @@ const initSearchForm = ()=>{
     if(router.currentRoute.value.query.size){
       searchForm.size = parseInt(router.currentRoute.value.query.size);
     }
-    searchForm.name = router.currentRoute.value.query.name;
+    if(router.currentRoute.value.query.name){
+      searchForm.name = router.currentRoute.value.query.name;
+    }
   }
 }
 // 获取列表
