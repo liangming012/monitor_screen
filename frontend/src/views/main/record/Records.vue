@@ -43,7 +43,7 @@
           <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
-              <el-button size="small" @click="router.push({name: 'editProject', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
+              <el-button size="small" @click="router.push({name: 'editRecord', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -92,7 +92,7 @@ const initSearchForm = ()=>{
     if(router.currentRoute.value.query.size){
       searchForm.size = parseInt(router.currentRoute.value.query.size);
     }
-    searchForm.id = router.currentRoute.value.query.id;
+    searchForm.id = router.currentRoute.value.query.id.toString();
   }
 }
 
