@@ -93,7 +93,7 @@ const menuList = ref([
       {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/show/list"},
     ]},
   {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/main/notice", "children":[
-      {"id": "4-1", "name": "报警方式", "icon": "", "index": "/main/notice/notice-list"},
+      {"id": "4-1", "name": "报警群组", "icon": "", "index": "/main/notice/notice-list"},
       {"id": "4-2", "name": "报警列表", "icon": "", "index": "/main/notice/notice-list"},
     ]},
 ])

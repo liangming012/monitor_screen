@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
 
@@ -32,3 +32,8 @@ class ShowInDBBase(ShowBase):
 class Show(ShowInDBBase):
     pass
 
+
+# API返回展示项目信息
+class Shows(BaseModel):
+    records: List[Show]
+    total: int

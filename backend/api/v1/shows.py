@@ -5,23 +5,30 @@ from api import deps
 from crud.crud_show import crud_show
 from models.user_model import UserModel
 from schemas.msg import Msg
-from schemas.show import Show, ShowUpdate, ShowCreate
+from schemas.show import Show, ShowUpdate, ShowCreate, Shows
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Show])
+@router.get("/", response_model=Shows)
 def get_shows(
         db: Session = Depends(deps.get_db),
-        skip: int = 0,
-        limit: int = 100,
+        project_id: str = '',
+        screen_id: str = '',
+        current: int = 1,
+        size: int = 10,
         current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取展示项目列表
     """
-    shows = crud_show.get_multi(db, skip=skip, limit=limit)
-    return shows
+    total = crud_show.get_records_count(db, project_id=project_id, screen_id=screen_id)
+    if total:
+        shows = crud_show.get_records(db, project_id=project_id, screen_id=screen_id, skip=(current - 1) * size,
+                                      limit=size)
+    else:
+        shows = []
+    return Shows(records=shows, total=total)
 
 
 @router.get("/{show_id}", response_model=Show)
