@@ -12,6 +12,7 @@ export const useMainStore = defineStore('main', {
   state:():MainState =>({
     token: '',
     userProfile: null,
+    isLoading: false,
   }),
   getters: {
     hasAdminAccess: (state: MainState) => {
@@ -19,6 +20,12 @@ export const useMainStore = defineStore('main', {
     }
   },
   actions: {
+    actionShowLoading() {
+      this.isLoading = true;
+    },
+    actionHideLoading() {
+      this.isLoading = false;
+    },
     async actionLogIn(payload: { username: string; password: string }) {
       try {
         const response = await user.logInGetToken(payload.username, payload.password);

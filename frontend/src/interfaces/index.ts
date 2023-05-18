@@ -9,6 +9,7 @@ export interface IUserProfile {
 export interface MainState {
     token: string;
     userProfile: IUserProfile | null;
+    isLoading: boolean;
 }
 
 export interface AdminState {

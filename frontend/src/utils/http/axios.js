@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ElMessage } from 'element-plus'
 import {getToken} from "../cookie/cookie.ts";
+import {useMainStore} from "../../store/main-store.ts";
 // 1. 创建axios实例
 const instance = axios.create({
   // 接口
@@ -8,6 +9,7 @@ const instance = axios.create({
   // 超时时间
   timeout: 60000,
 });
+
 // 2.请求拦截
 instance.interceptors.request.use(
   config => {
@@ -16,6 +18,8 @@ instance.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
+    const store = useMainStore();
+    store.actionShowLoading();
     return config;
   },
   error => {
@@ -27,9 +31,13 @@ instance.interceptors.request.use(
 // 3.响应拦截
 instance.interceptors.response.use(
   res => {
+    const store = useMainStore();
+    store.actionHideLoading();
     return res;
   },
   error => {
+    const store = useMainStore();
+    store.actionHideLoading();
     if (error && error.response) {
       const status = error.response.status
       switch (status) {
