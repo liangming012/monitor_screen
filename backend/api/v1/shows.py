@@ -2,6 +2,8 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from api import deps
+from crud.crud_project import crud_project
+from crud.crud_screen import crud_screen
 from crud.crud_show import crud_show
 from models.user_model import UserModel
 from schemas.msg import Msg
@@ -22,9 +24,9 @@ def get_shows(
     """
     获取展示项目列表
     """
-    total = crud_show.get_records_count(db, project_id=project_id, screen_id=screen_id)
+    total = crud_show.get_shows_count(db, project_id=project_id, screen_id=screen_id)
     if total:
-        shows = crud_show.get_records(db, project_id=project_id, screen_id=screen_id, skip=(current - 1) * size,
+        shows = crud_show.get_shows(db, project_id=project_id, screen_id=screen_id, skip=(current - 1) * size,
                                       limit=size)
     else:
         shows = []
@@ -89,5 +91,17 @@ def create_show(show_in: ShowCreate,
                 db: Session = Depends(deps.get_db),
                 current_user: UserModel = Depends(deps.active_user)
                 ) -> Any:
+    project = crud_project.get(db, unique_id=show_in.project_id)
+    if not project:
+        raise HTTPException(
+            status_code=404,
+            detail=f"找不到项目ID为 {show_in.project_id} 的项目！",
+        )
+    screen = crud_screen.get(db, unique_id=show_in.screen_id)
+    if not screen:
+        raise HTTPException(
+            status_code=404,
+            detail=f"找不到屏幕ID为 {show_in.screen_id} 的项目！",
+        )
     show = crud_show.create(db, show_in)
     return show

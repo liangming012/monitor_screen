@@ -21,7 +21,8 @@ class NoticeModel(Base):
 
     def __repr__(self) -> str:
         return f"NoticeModel(id={self.id!r}, name={self.name!r}, webhook_url={self.webhook_url!r}, " \
-               f"notice_type={self.notice_type!r}, at_all={self.at_all!r}, remarks={self.remarks!r})"
+               f"notice_type={self.notice_type!r}, at_all={self.at_all!r}, remarks={self.remarks!r}, " \
+               f"watch_notices={self.watch_notices!r})"
 
 
 

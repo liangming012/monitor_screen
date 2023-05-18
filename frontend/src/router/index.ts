@@ -143,6 +143,29 @@ const  routes = [
                             },
                         ],
                     },
+                    {
+                        path: 'show',
+                        name: 'show',
+                        redirect: '/main/show/list',
+                        children: [
+                            {
+                                path: 'list',
+                                name: 'shows',
+                                component: () => import('../views/main/show/Shows.vue'),
+                            },
+                            {
+                                path: 'edit/:id',
+                                name: 'editShow',
+                                component: () => import('../views/main/show/EditShow.vue'),
+                                props: true,
+                            },
+                            {
+                                path: 'add',
+                                name: 'addShow',
+                                component: () => import('../views/main/show/AddShow.vue'),
+                            },
+                        ],
+                    },
                 ],
             },
         ],

@@ -3,6 +3,10 @@ from pydantic import BaseModel
 
 
 # 基础属性
+from schemas.project import Project
+from schemas.screen import Screen
+
+
 class ShowBase(BaseModel):
     screen_id: Optional[int] = None
     weight: Optional[int] = None
@@ -30,7 +34,8 @@ class ShowInDBBase(ShowBase):
 
 # API返回展示项目信息
 class Show(ShowInDBBase):
-    pass
+    screen: Screen
+    show_project: Project
 
 
 # API返回展示项目信息

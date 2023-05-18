@@ -17,7 +17,9 @@ class ProjectModel(Base):
 
     records: Mapped[List["RecordModel"]] = relationship(back_populates="project", cascade="all, delete-orphan")
     watch_notices: Mapped[List["WatchNoticeModel"]] = relationship(back_populates="watch_project", cascade="all, delete-orphan")
+    project_shows: Mapped[List["ShowModel"]] = relationship(back_populates="show_project", cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
         return f"ProjectModel(id={self.id!r}, name={self.name!r}, duration_limit={self.duration_limit!r}), " \
-               f"jenkins_url={self.jenkins_url!r}, enable={self.enable!r})"
+               f"jenkins_url={self.jenkins_url!r}, enable={self.enable!r}), records={self.records!r}), " \
+               f"watch_notices={self.watch_notices!r}), project_shows={self.project_shows!r})"
