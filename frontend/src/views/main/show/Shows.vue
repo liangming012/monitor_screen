@@ -6,44 +6,25 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addShow', query:searchForm})">添加显示项目</el-button>
-        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction">
+        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的屏幕" clearable @clear="searchAction">
           <el-option
-              v-for="project in projects"
-              :key="project.id.toString()"
-              :label="project.name"
-              :value="project.id.toString()"
+              v-for="show in shows"
+              :key="show.id.toString()"
+              :label="show.name"
+              :value="show.id.toString()"
           />
         </el-select>
       </el-row>
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">
           <el-table-column prop="id" label="ID"/>
-          <el-table-column prop="project.name" label="项目名称"/>
-          <el-table-column prop="build_id" label="构建ID"/>
-          <el-table-column prop="url" label="构建地址"/>
-          <el-table-column prop="duration" label="持续时间"/>
-          <el-table-column prop="check_time" label="检查时间">
-            <template #default="scope">
-              {{getDate(scope.row.check_time)}}
-            </template>
-          </el-table-column>
-          <el-table-column prop="create_time" label="创建时间">
-            <template #default="scope">
-              {{getDate(scope.row.create_time)}}
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" label="状态">
-            <template #default="scope">
-                <el-tag type="success" v-if="scope.row.status===0">成功</el-tag>
-                <el-tag type="danger" v-else-if="scope.row.status===1">失败</el-tag>
-                <el-tag type="warning" v-else-if="scope.row.status===2">超时</el-tag>
-                <el-tag type="info" v-else>失效</el-tag>
-            </template>
-          </el-table-column>
+          <el-table-column prop="screen.name" label="屏幕名称"/>
+          <el-table-column prop="show_project.name" label="项目名称"/>
+          <el-table-column prop="weight" label="显示权重"/>
           <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
-              <el-button size="small" @click="router.push({name: 'editRecord', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
+              <el-button size="small" @click="router.push({name: 'editShow', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -63,10 +44,9 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {onMounted, reactive, ref} from "vue";
 import router from "../../../router/index.ts";
-import {record as api} from "../../../api/record.ts";
-import {getDate} from "../../../utils/date/date.ts";
-import {project} from "../../../api/project.ts";
+import {show as api} from "../../../api/show.ts";
 import ShowHeader from "../../../components/show/ShowHeader.vue";
+import {screen} from "../../../api/screen.ts";
 
 // Dom 挂载之后
 onMounted(() => {
@@ -74,7 +54,7 @@ onMounted(() => {
   getListAction();})
 // 表格数据
 let tableData = ref([]);
-let projects = ref([]);
+let shows = ref([]);
 let total = ref(0);
 // 搜索条件
 const searchForm = reactive({
@@ -84,7 +64,7 @@ const searchForm = reactive({
 })
 
 const initSearchForm = ()=>{
-  getProjects();
+  getScreens();
   if(JSON.stringify(router.currentRoute.value.query)!=="{}"){
     if(router.currentRoute.value.query.current){
       searchForm.current = parseInt(router.currentRoute.value.query.current);
@@ -99,14 +79,13 @@ const initSearchForm = ()=>{
 }
 
 // 获取列表
-const getProjects = async () => {
-  const res = await project.getList();
-  projects.value = res.data;
+const getScreens = async () => {
+  const res = await screen.getList();
+  shows.value = res.data;
 }
-
 // 获取列表
 const getListAction = async () => {
-  const res = await api.getRecords(searchForm);
+  const res = await api.getShows(searchForm);
   tableData.value = res.data.records;
   total.value = res.data.total;
 }
@@ -132,7 +111,7 @@ const deleteAction = (id) => {
         type: 'warning',
       }
   ).then(async () => {
-    const res = await api.deleteRecord(id);
+    const res = await api.deleteShow(id);
     if (res.data.msg) {
       ElMessage.success("删除成功")
       await getListAction();
