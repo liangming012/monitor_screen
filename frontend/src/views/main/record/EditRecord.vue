@@ -160,6 +160,6 @@ const resetForm = () => {   // 重置表单
 
 <style scoped>
 .el-form-item{
-  max-width: 30rem;
+  max-width: 20rem;
 }
 </style>
