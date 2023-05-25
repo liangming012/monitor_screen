@@ -6,3 +6,11 @@ export const isEmail = (rule, value, callback) => {
         callback();
     }
 }
+
+export const isEmptyArray = (rule, value, callback) => {
+    if (value && value.length<=0) {
+        callback(new Error('最少选择一项！'));
+    } else {
+        callback();
+    }
+}

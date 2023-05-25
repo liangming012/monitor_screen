@@ -166,6 +166,29 @@ const  routes = [
                             },
                         ],
                     },
+                    {
+                        path: 'notice',
+                        name: 'notice',
+                        redirect: '/main/notice/list',
+                        children: [
+                            {
+                                path: 'list',
+                                name: 'notices',
+                                component: () => import('../views/main/notice/Notices.vue'),
+                            },
+                            {
+                                path: 'edit/:id',
+                                name: 'editNotice',
+                                component: () => import('../views/main/notice/EditNotice.vue'),
+                                props: true,
+                            },
+                            {
+                                path: 'add',
+                                name: 'addNotice',
+                                component: () => import('../views/main/notice/AddNotice.vue'),
+                            },
+                        ],
+                    },
                 ],
             },
         ],
