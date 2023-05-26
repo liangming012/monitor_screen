@@ -34,8 +34,9 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column label="操作"  width="140px">
+          <el-table-column label="操作"  width="200px">
             <template #default="scope">
+              <el-button size="small" @click="openPreview(scope.row.id)">预览</el-button>
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
               <el-button size="small" @click="router.push({name: 'editScreen', params: {'id': scope.row.id}, query: searchForm})">编辑</el-button>
             </template>
@@ -124,6 +125,10 @@ const deleteAction = (id) => {
   }).catch(() => {
     ElMessage({type: 'info',message: '取消删除'})
   })
+}
+const openPreview = (id) => {
+  const routeData = router.resolve({name: 'view',params: {'id': id}, query: {}});
+  window.open(routeData.href, '_blank');
 }
 </script>
 

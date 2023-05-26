@@ -191,6 +191,14 @@ const  routes = [
                     },
                 ],
             },
+            {
+                path: '/view/:id',
+                name: 'view',
+                meta: {
+                    title: '前台屏幕'
+                },
+                component: () => import('../views/view.vue')
+            },
         ],
     },
     {
