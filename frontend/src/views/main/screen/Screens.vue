@@ -18,6 +18,22 @@
           <el-table-column prop="name" label="屏幕名称"/>
           <el-table-column prop="row" label="显示行数"/>
           <el-table-column prop="col" label="显示列数"/>
+          <el-table-column prop="faild_count" scoped-slot>
+            <template #header>
+              失败报警阈值(次)
+              <el-tooltip content="连续失败超过阈值次数屏幕才会显示提示" placement="top">
+                <el-icon><QuestionFilled /></el-icon>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+          <el-table-column prop="timeout_count">
+            <template #header>
+              超时报警阈值(次)
+              <el-tooltip content="连续超时超过阈值次数屏幕才会显示提示" placement="top">
+                <el-icon><QuestionFilled /></el-icon>
+              </el-tooltip>
+            </template>
+          </el-table-column>
           <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>

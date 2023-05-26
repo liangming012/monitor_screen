@@ -8,6 +8,8 @@ class ScreenBase(BaseModel):
     name: Optional[str] = None
     row: Optional[int] = None
     col: Optional[int] = None
+    faild_count: Optional[int] = None
+    timeout_count: Optional[int] = None
 
 
 # 创建屏幕
