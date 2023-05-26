@@ -10,7 +10,7 @@ class RecordModel(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     build_id: Mapped[int] = mapped_column(nullable=False)
     duration: Mapped[int] = mapped_column(nullable=False, default=0)
-    status: Mapped[int] = mapped_column(nullable=False)
+    status: Mapped[int] = mapped_column(nullable=False)  # 0=>成功 1=>失败 2=>超时 999=>失效
     url: Mapped[str] = mapped_column(String(500), default=True)
     check_time: Mapped[int] = mapped_column(nullable=False)
     create_time: Mapped[int] = mapped_column(nullable=False)

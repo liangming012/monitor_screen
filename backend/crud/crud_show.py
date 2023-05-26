@@ -31,6 +31,9 @@ class CRUDShow(CRUDBase):
         else:
             return db.query(self.model).offset(skip).limit(limit).all()
 
+    def get_screen_data(self, db: Session, screen_id):
+        return db.query(self.model).where(ShowModel.screen_id == screen_id).order_by(ShowModel.weight.desc()).all()
+
     def update(self, db: Session, db_obj: ShowModel, obj_in: Union[Show, Dict]) -> ShowModel:
         if isinstance(obj_in, dict):
             update_data = obj_in

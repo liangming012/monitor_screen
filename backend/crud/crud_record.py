@@ -16,9 +16,10 @@ class CRUDRecord(CRUDBase):
 
     def get_records(self, db: Session, project_id='', skip: int = 0, limit: int = 100) -> List[Any]:
         if project_id:
-            return db.query(self.model).where(RecordModel.project_id == project_id).offset(skip).limit(limit).all()
+            return db.query(self.model).where(RecordModel.project_id == project_id).order_by(
+                RecordModel.id.desc()).offset(skip).limit(limit).all()
         else:
-            return db.query(self.model).offset(skip).limit(limit).all()
+            return db.query(self.model).order_by(RecordModel.id.desc()).offset(skip).limit(limit).all()
 
     def create(self, db: Session, obj_in: RecordCreate) -> RecordModel:
         db_obj = RecordModel(
@@ -44,4 +45,3 @@ class CRUDRecord(CRUDBase):
 
 
 crud_record = CRUDRecord(RecordModel)
-
