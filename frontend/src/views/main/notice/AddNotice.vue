@@ -20,9 +20,6 @@
         <el-form-item label="报警@所有人:" prop="atAll">
           <el-switch v-model="form.atAll"/>
         </el-form-item>
-        <el-form-item label="备注信息:" prop="remarks">
-          <el-input type="textarea" :rows="3" v-model="form.remarks" placeholder="请输入备注信息" />
-        </el-form-item>
         <el-form-item label="监控方式:" prop="watchType">
           <el-radio-group v-model="form.watchType">
             <el-radio label="1">按屏幕</el-radio>
@@ -48,6 +45,19 @@
               multiple
               clearable
           />
+        </el-form-item>
+        <el-form-item label="失败报警阈值:" prop="faildCount">
+          <el-input type="number" :rows="3" v-model="form.faildCount" placeholder="请输入报警阈值" max="999" min="1">
+            <template #append>次</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="超时报警阈值:" prop="timeOutCount">
+          <el-input type="number" :rows="3" v-model="form.timeOutCount" placeholder="请输入报警阈值" max="999" min="1">
+            <template #append>次</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="备注信息:" prop="remarks">
+          <el-input type="textarea" :rows="3" v-model="form.remarks" placeholder="请输入备注信息" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit()">提交</el-button>
@@ -93,6 +103,8 @@ const form = reactive({
   watchType: '1',
   screenIds: [],
   projectIds: [],
+  faildCount: 1,
+  timeOutCount: 1,
 });
 const rules = reactive({
   name: [{ required: true, message: "报警群组名称不能为空", trigger: "blur"},
@@ -103,21 +115,30 @@ const rules = reactive({
   remarks: [{max:500, message: "备注信息不能超过500个字符"}],
   screenIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
   projectIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
+  faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},],
+  timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},],
 });
 const ruleFormRef = ref();
 const onSubmit = () => {
   if (!ruleFormRef) return;
   ruleFormRef.value.validate(async (valid) => {
     if (valid) {  // 表单验证通过
+      if(form.watchType === '1'){
+        form.projectIds = [];
+      }else if(form.watchType === '2'){
+        form.screenIds = [];
+      }
       const response = await api.createNotice(
           {name: form.name,
-                noticeType: form.noticeType,
-                url: form.url,
+                notice_type: form.noticeType.toString(),
+                webhook_url: form.url,
                 at_all: form.atAll,
                 remarks: form.remarks,
                 watch_type: form.watchType,
-                screen_ids: form.screenIds,
-                project_ids: form.projectIds,
+                screen_ids: form.screenIds.toString(),
+                project_ids: form.projectIds.toString(),
+                faild_count: form.faildCount,
+                timeout_count: form.timeOutCount,
           });
       if (response.data) {
         await router.push({name:'notices', query: router.currentRoute.value.query})

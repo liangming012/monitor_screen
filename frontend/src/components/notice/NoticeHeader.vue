@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="space-between">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item><router-link to="/main/screen/list">报警管理</router-link></el-breadcrumb-item>
+      <el-breadcrumb-item><router-link to="/main/notice/list">报警管理</router-link></el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.list">报警列表</el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.add">添加报警群组</el-breadcrumb-item>
       <el-breadcrumb-item v-if="props.edit">编辑报警群组</el-breadcrumb-item>

@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 from fastapi import APIRouter
 
 from api.deps import engine
-from api.v1 import login, users, projects, records, screens, shows, notices, watch_notices
+from api.v1 import login, users, projects, records, screens, shows, notices
 from core.config import settings
 from models.base import Base
 
@@ -30,5 +30,4 @@ api_router.include_router(records.router, prefix="/records", tags=["records"])
 api_router.include_router(screens.router, prefix="/screens", tags=["screens"])
 api_router.include_router(shows.router, prefix="/shows", tags=["shows"])
 api_router.include_router(notices.router, prefix="/notices", tags=["notices"])
-api_router.include_router(watch_notices.router, prefix="/watch_notices", tags=["watch_notices"])
 app.include_router(api_router, prefix=settings.API_V1_STR)
