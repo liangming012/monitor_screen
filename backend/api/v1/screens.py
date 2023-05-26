@@ -76,7 +76,7 @@ def read_screen_by_id(
     shows = crud_show.get_screen_data(db, screen_id)
     total = screen.row * screen.col
     data = []
-    for i in range(total):
+    for i in range(min(total, len(shows))):
         # status值：0=>成功 1=>失败 2=>超时 999=>失效
         project = {"name": crud_project.get(db, unique_id=shows[i].project_id).name, "status": 999}
         records = crud_record.get_records(db, project_id=shows[i].project_id,

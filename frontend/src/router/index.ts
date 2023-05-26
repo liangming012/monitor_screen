@@ -214,7 +214,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-    if(to.name !=='login')
+    if(to.name !=='login' && to.name !=='view')
     {
         const store = useMainStore();
         await store.actionCheckLoggedIn();
@@ -222,7 +222,7 @@ router.beforeEach(async (to, from) => {
 });
 
 router.afterEach(async (to, from) => {
-    if(to.name !=='login')
+    if(to.name !=='login' && to.name !=='view')
     {
         const store = useMainStore();
         await store.actionCheckLoggedIn();

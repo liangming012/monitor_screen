@@ -8,6 +8,7 @@
 import {view} from "../api/view.ts";
 import {onMounted} from "vue";
 import router from "../router/index.ts";
+import {getLastItem} from "../utils/common";
 
 onMounted(() => {
   getViewData();
