@@ -18,7 +18,9 @@
           <el-table-column prop="name" label="报警群组"/>
           <el-table-column prop="notice_type" label="报警方式">
             <template #default="scope">
-              <el-tag v-for="type in scope.row.notice_type.split(',')">{{type}}</el-tag>
+              <div v-if="scope.row.notice_type !== ''">
+                <el-tag v-for="type in scope.row.notice_type.split(',')">{{type}}</el-tag>
+              </div>
             </template>
           </el-table-column>
           <el-table-column  prop="at_all" label="@所有人">
@@ -34,8 +36,8 @@
           </el-table-column>
           <el-table-column prop="watch_type" label="监控方式">
             <template #default="scope">
-              <el-tag v-if="scope.row.watch_type === 1">按屏幕</el-tag>
-              <el-tag v-if="scope.row.watch_type === 2">按项目</el-tag>
+              <el-tag type="success" v-if="scope.row.watch_type === 1">按屏幕</el-tag>
+              <el-tag  v-if="scope.row.watch_type === 2">按项目</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="faild_count" scoped-slot>

@@ -14,8 +14,8 @@
             <el-checkbox label="飞书" />
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="webhook url:" prop="url">
-          <el-input v-model="form.url" placeholder="请输入webhook url"/>
+        <el-form-item label="webhook url:" prop="webhookUrl">
+          <el-input v-model="form.webhookUrl" placeholder="请输入webhook url"/>
         </el-form-item>
         <el-form-item label="报警@所有人:" prop="atAll">
           <el-switch v-model="form.atAll"/>
@@ -97,7 +97,7 @@ const getScreens = async () => {
 const form = reactive({
   name: '',
   noticeType: [],
-  url: '',
+  webhookUrl: '',
   atAll: false,
   remarks: '',
   watchType: '1',
@@ -109,7 +109,7 @@ const form = reactive({
 const rules = reactive({
   name: [{ required: true, message: "报警群组名称不能为空", trigger: "blur"},
     {max:50, message: "报警群组名称不能超过50个字符"}],
-  url: [{ required: true, message: "webhook url不能为空", trigger: "blur"},
+  webhookUrl: [{ required: true, message: "webhook url不能为空", trigger: "blur"},
     { pattern: /^https?:\/\/.+$/, message: "webhook url必须http://或https://开头", trigger: "blur" },
     {max:500, message: "webhook url不能超过500个字符"}],
   remarks: [{max:500, message: "备注信息不能超过500个字符"}],
@@ -131,7 +131,7 @@ const onSubmit = () => {
       const response = await api.createNotice(
           {name: form.name,
                 notice_type: form.noticeType.toString(),
-                webhook_url: form.url,
+                webhook_url: form.webhookUrl,
                 at_all: form.atAll,
                 remarks: form.remarks,
                 watch_type: form.watchType,
