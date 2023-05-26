@@ -17,4 +17,5 @@ class ShowModel(Base):
 
     def __repr__(self) -> str:
         return f"ShowModel(id={self.id!r}, screen_id={self.screen_id!r}, weight={self.weight!r}, " \
-               f"project_id={self.project_id!r}, screen={self.screen!r}, show_project={self.show_project!r})"
+               f"project_id={self.project_id!r})"
+

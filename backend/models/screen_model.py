@@ -20,4 +20,5 @@ class ScreenModel(Base):
 
     def __repr__(self) -> str:
         return f"ScreenModel(id={self.id!r}, name={self.name!r}, row={self.row!r}, col={self.col!r}, " \
-               f"faild_count={self.faild_count!r}, timeout_count={self.timeout_count!r},screen_shows={self.screen_shows!r})"
+               f"faild_count={self.faild_count!r}, timeout_count={self.timeout_count!r}, " \
+               f"screen_shows={self.screen_shows!r})"
