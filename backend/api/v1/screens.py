@@ -87,19 +87,15 @@ def read_screen_by_id(
             if project['status'] == 1 and screen.faild_count > 1:
                 for m in range(min(screen.faild_count, len(records))):
                     if records[m].status == 0:
-                        if records[m].duration <= records[m].project.duration_limit:
-                            project['status'] = 0
-                            break
-                        else:
-                            project['status'] = 2
+                        project['status'] = 0
+                        break
+                    if records[m].status == 2:
+                        project['status'] = 2
             elif project['status'] == 2 and screen.timeout_count > 1:
                 for m in range(min(screen.timeout_count, len(records))):
                     if records[m].status == 0:
-                        if records[m].duration <= records[m].project.duration_limit:
-                            project['status'] = 0
-                            break
-                        else:
-                            project['status'] = 2
+                        project['status'] = 0
+                        break
         else:
             project['check_time'] = int(time.time())
         data.append(project)
