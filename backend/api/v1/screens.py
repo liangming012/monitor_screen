@@ -99,6 +99,12 @@ def read_screen_by_id(
         else:
             project['check_time'] = int(time.time())
         data.append(project)
+    # data = []
+    # for m in range(0, screen.row):
+    #     for n in range(0, screen.col):
+    #         if n == 0:
+    #             data.append([])
+    #         data[m].append(datas[n + m * screen.col])
     return {"screen": jsonable_encoder(screen), "data": data}
 
 
