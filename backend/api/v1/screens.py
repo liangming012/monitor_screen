@@ -88,23 +88,20 @@ def read_screen_by_id(
                 for m in range(min(screen.faild_count, len(records))):
                     if records[m].status == 0:
                         project['status'] = 0
+                        project['url'] = records[m].url
                         break
                     if records[m].status == 2:
                         project['status'] = 2
+                        project['url'] = records[m].url
             elif project['status'] == 2 and screen.timeout_count > 1:
                 for m in range(min(screen.timeout_count, len(records))):
                     if records[m].status == 0:
                         project['status'] = 0
+                        project['url'] = records[m].url
                         break
         else:
             project['check_time'] = int(time.time())
         data.append(project)
-    # data = []
-    # for m in range(0, screen.row):
-    #     for n in range(0, screen.col):
-    #         if n == 0:
-    #             data.append([])
-    #         data[m].append(datas[n + m * screen.col])
     return {"screen": jsonable_encoder(screen), "data": data}
 
 
