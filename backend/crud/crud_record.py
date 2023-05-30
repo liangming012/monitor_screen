@@ -1,5 +1,7 @@
 import time
 from typing import Dict, Union, List, Any
+
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
 from models.record_model import RecordModel
@@ -20,6 +22,10 @@ class CRUDRecord(CRUDBase):
                 RecordModel.id.desc()).offset(skip).limit(limit).all()
         else:
             return db.query(self.model).order_by(RecordModel.id.desc()).offset(skip).limit(limit).all()
+
+    def is_build_exist(self, db: Session, project_id: int, build_id: int):
+        return db.query(self.model).filter(
+            and_(RecordModel.project_id == project_id, RecordModel.build_id == build_id)).count()
 
     def create(self, db: Session, obj_in: RecordCreate) -> RecordModel:
         db_obj = RecordModel(

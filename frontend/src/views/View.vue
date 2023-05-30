@@ -7,7 +7,7 @@
           <div class="project">
             <div class="success">
               <div class="name"><strong>{{ record.name }}</strong></div>
-              <div class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -17,7 +17,7 @@
           <div class="project">
             <div class="error">
               <div class="name"><strong>{{ record.name }}</strong></div>
-              <div class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -27,7 +27,7 @@
           <div class="project">
             <div class="warning">
               <div class="name"><strong>{{ record.name }}</strong></div>
-              <div class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -37,7 +37,7 @@
           <div class="project">
             <div class="invalid">
               <div class="name"><strong>{{ record.name }}</strong></div>
-              <div class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import router from "../router/index.ts";
 import {getLastItem} from "../utils/common";
 import {getDateTime} from "../utils/date/date.ts";
@@ -66,7 +66,13 @@ const instance = axios.create({
   // 超时时间
   timeout: 30000,
 });
-
+const isShowCheckTime = computed(()=>{
+  if(window.innerWidth/window.innerHeight >= 3){
+    return false;
+  }else{
+    return true;
+  }
+});
 const getViewData = async () => {
   instance.get(`screens/${getLastItem(router.currentRoute.value.path)}/show`)
       .then(function (response) {
@@ -106,8 +112,9 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   align-content: stretch;
+  background-color: black;
 }
 
 .project {
@@ -121,10 +128,10 @@ body {
 }
 
 .name {
-  padding-top: v-bind(20/row+ "vh"); /* 动态计算每个格子的高度*/
+  padding-top: v-bind(16/row+ "vh"); /* 动态计算每个格子的高度*/
   /*line-height: v-bind(50/row + "vh");  !* 动态计算每个格子的高度*!*/
   /*height: v-bind(50/row + "vh");  !* 动态计算每个格子的高度*!*/
-  font-size: calc(4vw); /* calc函数动态计算相对窗口宽度大小 */
+  font-size: calc(3vw); /* calc函数动态计算相对窗口宽度大小 */
 }
 
 .time {

@@ -6,14 +6,17 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addRecord', query:searchForm})">添加记录</el-button>
-        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction">
-          <el-option
-              v-for="project in projects"
-              :key="project.id.toString()"
-              :label="project.name"
-              :value="project.id.toString()"
-          />
-        </el-select>
+        <div>
+          <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的项目" clearable @clear="searchAction">
+            <el-option
+                v-for="project in projects"
+                :key="project.id.toString()"
+                :label="project.name"
+                :value="project.id.toString()"
+            />
+          </el-select>
+          <el-button icon="Search" @click="searchAction" />
+        </div>
       </el-row>
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">

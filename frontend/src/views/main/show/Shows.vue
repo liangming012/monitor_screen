@@ -6,14 +6,17 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addShow', query:searchForm})">添加显示项目</el-button>
-        <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的屏幕" clearable @clear="searchAction">
-          <el-option
-              v-for="show in shows"
-              :key="show.id.toString()"
-              :label="show.name"
-              :value="show.id.toString()"
-          />
-        </el-select>
+        <div>
+          <el-select style="width:20rem;" v-model="searchForm.id" @change="searchAction" placeholder="请选择要搜索的屏幕" clearable @clear="searchAction">
+            <el-option
+                v-for="show in shows"
+                :key="show.id.toString()"
+                :label="show.name"
+                :value="show.id.toString()"
+            />
+          </el-select>
+          <el-button class="elemetn-end" icon="Search" @click="searchAction" />
+        </div>
       </el-row>
       <el-row>
         <el-table stripe :data="tableData" border style="width: 100%;margin-top:2rem">

@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
     FIRST_SUPERUSER_NAME: str
+    JENKINS_ACCOUNT: str
+    JENKINS_PWD: str
 
     class Config:
         case_sensitive = True
