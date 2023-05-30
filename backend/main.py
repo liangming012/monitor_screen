@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from fastapi import APIRouter
 
-from api.deps import engine
 from api.v1 import login, users, projects, records, screens, shows, notices
 from core.config import settings
-from models.base import Base
-
-Base.metadata.create_all(bind=engine)
+# 不要使用以下代码自动创建数据库表，请使用 alembic的自动生成数据库迁移和迁移升级到最新版本命令
+# from api.deps import engine
+# from models.base import Base
+# Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
