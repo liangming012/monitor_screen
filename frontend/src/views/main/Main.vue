@@ -81,21 +81,36 @@ import Footer from "../../components/Footer.vue";
 const store = useMainStore();
 let isCollapse = ref(false); //默认展开菜单
 // 菜单配置
-const menuList = ref([
-  {"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
-  {"id":'2' , "name": "用户管理", "icon": "User", "index": "/main/user/list", "children":[]},
-  {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/main/project", "children":[
-      {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/list"},
-      {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/record/list"},
-    ]},
-  {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/main/screen", "children":[
-      {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/list"},
-      {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/show/list"},
-    ]},
-  {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/main/notice", "children":[
-      {"id": "4-1", "name": "报警群组", "icon": "", "index": "/main/notice/list"},
-    ]},
-])
+const menuList = ref([])
+console.log();
+if(store.hasAdminAccess){
+  menuList.value = [{"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
+      {"id":'2' , "name": "用户管理", "icon": "User", "index": "/main/user/list", "children":[]},
+      {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/main/project", "children":[
+          {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/list"},
+          {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/record/list"},
+        ]},
+      {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/main/screen", "children":[
+          {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/list"},
+          {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/show/list"},
+        ]},
+      {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/main/notice", "children":[
+          {"id": "4-1", "name": "报警群组", "icon": "", "index": "/main/notice/list"},
+        ]}]
+}else {
+  menuList.value = [{"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
+    {"id":'3' , "name": "项目管理", "icon": "Operation", "index": "/main/project", "children":[
+        {"id": "3-1", "name": "项目列表", "icon": "", "index": "/main/project/list"},
+        {"id": "3-2", "name": "记录列表", "icon": "", "index": "/main/record/list"},
+      ]},
+    {"id":'4' , "name": "屏幕管理", "icon": "Monitor", "index": "/main/screen", "children":[
+        {"id": "4-1", "name": "屏幕列表", "icon": "", "index": "/main/screen/list"},
+        {"id": "4-2", "name": "显示列表", "icon": "", "index": "/main/show/list"},
+      ]},
+    {"id":'5' , "name": "报警管理", "icon": "Notification", "index": "/main/notice", "children":[
+        {"id": "4-1", "name": "报警群组", "icon": "", "index": "/main/notice/list"},
+      ]}]
+}
 // 挂载 DOM 之前，默认菜单激活链接
 onBeforeMount(() => {
   activePath.value = sessionStorage.getItem("activePath")
