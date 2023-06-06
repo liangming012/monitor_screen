@@ -63,17 +63,17 @@ let total = ref(0);
 const searchForm = reactive({
   current: 1,
   size: 10,
-  id: null
+  id: ''
 })
 
 const initSearchForm = ()=>{
   getScreens();
   if(JSON.stringify(router.currentRoute.value.query)!=="{}"){
     if(router.currentRoute.value.query.current){
-      searchForm.current = parseInt(router.currentRoute.value.query.current);
+      searchForm.current = parseInt(<string>router.currentRoute.value.query.current);
     }
     if(router.currentRoute.value.query.size){
-      searchForm.size = parseInt(router.currentRoute.value.query.size);
+      searchForm.size = parseInt(<string>router.currentRoute.value.query.size);
     }
     if(router.currentRoute.value.query.id){
       searchForm.id = router.currentRoute.value.query.id.toString();

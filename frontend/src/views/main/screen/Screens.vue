@@ -77,13 +77,13 @@ const searchForm = reactive({
 const initSearchForm = ()=>{
   if(JSON.stringify(router.currentRoute.value.query)!=="{}"){
     if(router.currentRoute.value.query.current){
-      searchForm.current = parseInt(router.currentRoute.value.query.current);
+      searchForm.current = parseInt(<string>router.currentRoute.value.query.current);
     }
     if(router.currentRoute.value.query.size){
-      searchForm.size = parseInt(router.currentRoute.value.query.size);
+      searchForm.size = parseInt(<string>router.currentRoute.value.query.size);
     }
     if(router.currentRoute.value.query.name){
-      searchForm.name = router.currentRoute.value.query.name;
+      searchForm.name = <string>router.currentRoute.value.query.name;
     }
   }
 }

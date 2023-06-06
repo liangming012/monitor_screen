@@ -1,6 +1,6 @@
 import instance from "./axios"
 
-const post = (url, data= undefined) => {
+const post = (url, data) => {
     return new Promise((resolve, reject) => {
         instance.post(url, data).then(res => {
             resolve(res)
