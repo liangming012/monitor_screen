@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus';
 import {getToken} from "../cookie/cookie.ts";
 import {useMainStore} from "../../store/main-store.ts";
 // 1. 创建axios实例

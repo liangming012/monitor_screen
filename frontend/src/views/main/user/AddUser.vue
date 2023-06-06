@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import UserHeader from "../../../components/user/UserHeader.vue";
 import {reactive, ref} from "vue";
 import {user as api} from "../../../api/user.ts";

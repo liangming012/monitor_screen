@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {useMainStore} from "../../../store/main-store.ts";
 import ProfileButton from "../../../components/profile/ProfileButton.vue";
 import ProfileHeader from "../../../components/profile/ProfileHeader.vue";

@@ -73,7 +73,7 @@
     <Footer></Footer>
   </el-container>
 </template>
-<script setup>
+<script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
 import {useMainStore} from "../../store/main-store.ts";
 import router from "../../router/index.ts";

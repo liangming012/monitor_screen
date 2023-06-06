@@ -1,4 +1,4 @@
-export const getDate = (timestamp: string) => {
+export const getDate = (timestamp: number) => {
     let date = new Date(timestamp * 1000);  // 参数需要毫秒数，所以这里将秒数乘于 1000
     let Y = date.getFullYear() + '-';
     let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
@@ -9,7 +9,7 @@ export const getDate = (timestamp: string) => {
     return Y+M+D+h+m+s;
 };
 
-export const getDateTime = (timestamp: string) => {
+export const getDateTime = (timestamp: number) => {
     let date = new Date(timestamp * 1000);  // 参数需要毫秒数，所以这里将秒数乘于 1000
     let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
     let D = date.getDate() + ' ';

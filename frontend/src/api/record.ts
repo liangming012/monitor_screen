@@ -1,4 +1,4 @@
-import http from '../utils/http/http.js'
+import http from '../utils/http/http.ts'
 
 export const record = {
     async getRecords(data) {
