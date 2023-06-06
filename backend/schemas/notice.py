@@ -15,6 +15,7 @@ class NoticeBase(BaseModel):
     faild_count: Optional[int] = 1
     timeout_count: Optional[int] = 1
     remarks: Optional[str] = ''
+    enable: Optional[bool] = False
 
 
 # 创建通知

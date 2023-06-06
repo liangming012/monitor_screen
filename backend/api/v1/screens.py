@@ -89,15 +89,14 @@ def read_screen_by_id(
                     if records[m].status == 0:
                         project['status'] = 0
                         project['url'] = records[m].url
+                        project['check_time'] = records[m].check_time
                         break
-                    if records[m].status == 2:
-                        project['status'] = 2
-                        project['url'] = records[m].url
             elif project['status'] == 2 and screen.timeout_count > 1:
                 for m in range(min(screen.timeout_count, len(records))):
                     if records[m].status == 0:
                         project['status'] = 0
                         project['url'] = records[m].url
+                        project['check_time'] = records[m].check_time
                         break
         else:
             project['check_time'] = int(time.time())

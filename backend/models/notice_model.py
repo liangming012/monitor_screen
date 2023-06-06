@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String, false
 from sqlalchemy.orm import Mapped, mapped_column
 
 from models.base import Base
@@ -18,12 +18,11 @@ class NoticeModel(Base):
     faild_count: Mapped[int] = mapped_column(default=1, nullable=False)
     timeout_count: Mapped[int] = mapped_column(default=1, nullable=False)
     remarks: Mapped[str] = mapped_column(String(500), nullable=False)
+    enable: Mapped[bool] = mapped_column(default=False,
+                                         server_default=false())  # server_default=false() 设置 alembic里的默认值
 
     def __repr__(self) -> str:
         return f"NoticeModel(id={self.id!r}, name={self.name!r}, webhook_url={self.webhook_url!r}, " \
                f"notice_type={self.notice_type!r}, at_all={self.at_all!r}, remarks={self.remarks!r}, " \
                f"watch_type={self.watch_type!r}, screen_ids={self.screen_ids!r}, project_ids={self.project_ids!r}, " \
-               f"faild_count={self.faild_count!r}, timeout_count={self.timeout_count!r})"
-
-
-
+               f"faild_count={self.faild_count!r}, timeout_count={self.timeout_count!r}, enable={self.enable!r})"

@@ -59,6 +59,9 @@
         <el-form-item label="备注信息:" prop="remarks">
           <el-input type="textarea" :rows="3" v-model="form.remarks" placeholder="请输入备注信息"/>
         </el-form-item>
+        <el-form-item label="是否启用:" prop="enable">
+          <el-switch v-model="form.enable"/>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit()">提交</el-button>
           <el-button type="primary" @click="resetForm()">重置</el-button>
@@ -121,6 +124,7 @@ const getNotice = async () => {
   form.projectIds = res.data.project_ids.split(',').map(Number);
   form.faildCount = res.data.faild_count;
   form.timeOutCount = res.data.timeout_count;
+  form.enable = res.data.enable;
 }
 const rules = reactive({
   name: [{required: true, message: "报警群组名称不能为空", trigger: "blur"},
@@ -152,6 +156,7 @@ const onSubmit = () => {
             project_ids: form.projectIds.toString(),
             faild_count: form.faildCount,
             timeout_count: form.timeOutCount,
+            enable: form.enable,
           });
       if (response.data) {
         await router.push({name: 'notices', query: router.currentRoute.value.query})

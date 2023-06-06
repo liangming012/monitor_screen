@@ -56,6 +56,17 @@
               </el-tooltip>
             </template>
           </el-table-column>
+          <el-table-column  prop="enable" label="是否启用">
+            <template #default="scope">
+              <el-switch
+                  v-model="scope.row.enable"
+                  inline-prompt
+                  active-text="是"
+                  inactive-text="否"
+                  disabled
+              />
+            </template>
+          </el-table-column>
           <el-table-column label="操作"  width="140px">
             <template #default="scope">
               <el-button type="danger" size="small" @click="deleteAction(scope.row.id)">删除</el-button>
