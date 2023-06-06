@@ -1,7 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import {useMainStore} from "../store/main-store";
+import * as VueRouter from 'vue-router';
 
-const  routes = [
+export const routes: VueRouter.RouteRecordRaw[] = [
     {
         path: '/',
         name: 'index',
@@ -197,7 +198,7 @@ const  routes = [
                 meta: {
                     title: '前台屏幕'
                 },
-                component: () => import('../views/view.vue')
+                component: () => import('../views/View.vue')
             },
         ],
     },
@@ -208,9 +209,8 @@ const  routes = [
 
 
 const router = createRouter({
-    history: createWebHistory(),
-    base: import.meta.env.BASE_URL,
-    routes, //same --- > routes:routes
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: routes, //same --- > routes:routes
 });
 
 router.beforeEach(async (to, from) => {

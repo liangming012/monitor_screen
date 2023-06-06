@@ -14,8 +14,14 @@ export const setCookie = (name: string, val: string, exp: number = 0, path:strin
 export const getCookie = (name: string) => {
     const value = "; " + document.cookie;
     const parts = value.split("; " + name + "=");
-    if (parts.length == 2) {
-        return parts.pop().split(";").shift();
+    if (parts && parts.length == 2) {
+        let data = parts.pop();
+        if(data){
+            return data.split(";").shift();
+        }else {
+            return "";
+        }
+
     }
 }
 export const deleteCookie = (name: string, path:string = '/') => {

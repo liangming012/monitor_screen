@@ -13,13 +13,13 @@ export const user = {
         return http.post(`login/access-token`, params);
     },
     async getMe() {
-        return http.get<IUserProfile>('users/me', {})
+        return http.get('users/me', {})
     },
     async updateMe(data) {
-        return http.put<IUserProfile>(`users/me`, data);
+        return http.put(`users/me`, data);
     },
     async getUsers(data) {
-        return http.get<IUserProfile[]>(`users/`, data);
+        return http.get(`users/`, data);
     },
     async getUser(userId: string) {
         return http.get(`users/${userId}`, {});
