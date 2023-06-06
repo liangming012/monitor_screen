@@ -94,6 +94,7 @@ const form = reactive({
   projectIds: [],
   faildCount: 1,
   timeOutCount: 1,
+  enable: false,
 });
 
 onMounted(() => {
