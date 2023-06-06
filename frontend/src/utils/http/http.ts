@@ -1,6 +1,6 @@
 import instance from "./axios"
 
-const post = (url, data) => {
+const post = (url:string, data:any): any => {
     return new Promise((resolve, reject) => {
         instance.post(url, data).then(res => {
             resolve(res)
@@ -9,7 +9,7 @@ const post = (url, data) => {
         })
     })
 }
-const get = (url, data) => {
+const get = (url:string,  data:any): any => {
     return new Promise((resolve, reject) => {
         instance.get(url, {params: data}).then(res => {
             resolve(res)
@@ -18,7 +18,7 @@ const get = (url, data) => {
         })
     })
 }
-const put = (url, data) => {
+const put = (url:string, data:any): any => {
     return new Promise((resolve, reject) => {
         instance.put(url, data).then(res => {
             resolve(res)
@@ -27,8 +27,7 @@ const put = (url, data) => {
         })
     })
 }
-
-const del = (url, data) => {
+const del = (url:string, data:any): any => {
     return new Promise((resolve, reject) => {
         instance.delete(url, {params: data}).then(res => {
             resolve(res)

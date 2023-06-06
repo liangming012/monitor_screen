@@ -7,7 +7,7 @@ export interface IUserProfile {
 }
 
 export interface MainState {
-    token: string;
+    token: string | undefined;
     userProfile: IUserProfile | null;
     isLoading: boolean;
 }
