@@ -9,10 +9,10 @@
           <el-input v-model="form.name" placeholder="请输入报警群组名称"/>
         </el-form-item>
         <el-form-item label="报警方式:" prop="noticeType">
-          <el-checkbox-group v-model="form.noticeType">
-            <el-checkbox label="钉钉"/>
-            <el-checkbox label="飞书"/>
-          </el-checkbox-group>
+          <el-radio-group v-model="form.noticeType">
+            <el-radio label="钉钉">钉钉</el-radio>
+            <el-radio label="飞书">飞书</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="webhook url:" prop="webhookUrl">
           <el-input v-model="form.webhookUrl" placeholder="请输入webhook url"/>
@@ -112,11 +112,7 @@ const props = defineProps({id: String});
 const getNotice = async () => {
   const res = await api.getNotice(props.id);
   form.name = res.data.name;
-  if(res.data.notice_type === ''){
-    form.noticeType = [];
-  }else {
-    form.noticeType = res.data.notice_type.split(',');
-  }
+  form.noticeType = res.data.notice_type
   form.webhookUrl = res.data.webhook_url;
   form.atAll = res.data.at_all;
   form.remarks = res.data.remarks;

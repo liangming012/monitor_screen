@@ -5,7 +5,7 @@
           <el-row>
               <el-col :span="1">
                 <div class="toggle-button" @click="isCollapse = !isCollapse">
-                  <el-icon :size="60">
+                  <el-icon :size="50">
                     <Expand v-if="isCollapse" />
                     <Fold v-if="!isCollapse" />
                   </el-icon>
@@ -82,7 +82,6 @@ const store = useMainStore();
 let isCollapse = ref(false); //默认展开菜单
 // 菜单配置
 const menuList = ref([])
-console.log();
 if(store.hasAdminAccess){
   menuList.value = [{"id":'1' , "name": "首页", "icon": "House", "index": "/main/dashboard", "children":[]},
       {"id":'2' , "name": "用户管理", "icon": "User", "index": "/main/user/list", "children":[]},
