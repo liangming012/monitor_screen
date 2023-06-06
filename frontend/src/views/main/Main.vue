@@ -11,10 +11,10 @@
                   </el-icon>
                 </div>
               </el-col>
-              <el-col :offset="0" :span="3">
-                  <p class="system-name">监控屏管理系统</p>
+              <el-col :span="2">
+                  <p class="system-name">监控屏管理</p>
               </el-col>
-              <el-col :offset="14" :span="6">
+              <el-col :offset="17" :span="4">
                   <el-dropdown>
                     <p>
                       <el-button type="primary">
@@ -137,13 +137,13 @@ const logout = () => {
   background: #f2f3f5;
 }
 .el-header {
-  background: #2661ef;
+  background: #5a87f5;
   padding: 0 10px;
   overflow: hidden;
 }
 .toggle-button {
   height: 100%;
-  background-color: #2661ef;
+  background-color: #5a87f5;
   top:60%;
   text-align: center;
   cursor: pointer;

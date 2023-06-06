@@ -4,7 +4,7 @@
       <ProfileHeader :return=false></ProfileHeader>
     </template>
     <br>
-    <div id="welcome">{{"欢迎 " + store.userProfile.full_name + ' !'}}</div>
+    <div id="welcome">{{"欢迎您：" + store.userProfile.full_name}}</div>
     <div id="identity">{{"您的身份是：" + identity}}</div>
     <br>
     <br>
