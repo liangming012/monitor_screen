@@ -6,7 +6,7 @@
       </template>
       <el-row type="flex" justify="space-between">
         <el-button type="primary" @click="router.push({name:'addUser', query:searchForm})">添加用户</el-button>
-        <el-input style="width:20rem;" @blur="searchAction" @clear="searchAction" @keyup.enter="searchAction" clearable v-model.trim="searchForm.name" placeholder="请输入用户姓名">
+        <el-input style="width:20rem;" @clear="searchAction" @keyup.enter="searchAction" clearable v-model.trim="searchForm.name" placeholder="请输入用户姓名">
           <template #append>
             <el-button icon="Search" @click="searchAction" />
           </template>
