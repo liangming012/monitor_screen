@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_NAME: str
     JENKINS_ACCOUNT: str
     JENKINS_PWD: str
+    RECORD_SAVE_TIME: int
 
     class Config:
         case_sensitive = True

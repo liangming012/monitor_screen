@@ -24,7 +24,7 @@ def get_jenkins_data(url, job_name):
             if build_info['result']:
                 return build_info
     except jenkins.JenkinsException as e:
-        print(f'获取Jenkins的Job【{job_name}】信息失败，错误信息是：{e}')
+        raise ValueError(f'获取Jenkins的Job【{job_name}】信息失败，错误信息是：{e}')
 
 
 def synchronous_data(db):
@@ -62,8 +62,20 @@ def synchronous_data(db):
     print('同步完成！')
 
 
+def delete_record(db):
+    """
+    超过配置 RECORD_SAVE_TIME天的记录会被删除
+    """
+    now = int(time.time())
+    past_day = now - settings.RECORD_SAVE_TIME * 24 * 3600
+    result = crud_record.delete_old_record(db, past_day)
+    print(f"删除了{len(result)}条记录")
+
+
 if __name__ == '__main__':
-    synchronous_data(next(get_db()))
+    db = next(get_db())
+    synchronous_data(db)
+    delete_record(db)
 
 
 

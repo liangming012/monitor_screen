@@ -49,5 +49,12 @@ class CRUDRecord(CRUDBase):
             update_data = obj_in.dict(exclude_unset=True)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
+    def delete_old_record(self, db: Session, create_time: int) -> Any:
+        objs = db.query(self.model).filter(RecordModel.create_time <= create_time).all()
+        for obj in objs:
+            db.delete(obj)
+        db.commit()
+        return objs
+
 
 crud_record = CRUDRecord(RecordModel)
