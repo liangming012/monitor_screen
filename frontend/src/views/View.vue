@@ -84,7 +84,6 @@ const getViewData = async () => {
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
         if(error.code == "ERR_NETWORK"){
           networkError.value = true;
           row.value = 0;

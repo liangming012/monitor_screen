@@ -226,6 +226,7 @@ router.afterEach(async (to, from) => {
     {
         const store = useMainStore();
         await store.actionCheckLoggedIn();
+        store.changeActiveMenu(router.currentRoute.value.path);
     }
 });
 

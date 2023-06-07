@@ -10,6 +10,7 @@ export interface MainState {
     token: string | undefined;
     userProfile: IUserProfile | null;
     isLoading: boolean;
+    activeMenu: string;
 }
 
 export interface AdminState {
