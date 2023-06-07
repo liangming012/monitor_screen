@@ -67,6 +67,8 @@ def get_project_data(db, project_id, faild_count, timeout_count):
     根据项目ID获取对应项目的信息
     """
     project = crud_project.get(db, unique_id=project_id)
+    if not project:  # 项目不存在返回None
+        return None
     project_dict = {"name": project.name, "status": 999}
     if project.enable:
         records = crud_record.get_records(db, project_id=project.id,
@@ -91,15 +93,17 @@ def notice_samebody(db):
     notices = crud_notice.list(db)
     for notice in notices:
         if notice.enable:
-            content = ''
+            content = '监控报警：\n'
             for project_id in get_notice_project_ids(db, notice):
                 project = get_project_data(db, project_id, notice.faild_count, notice.timeout_count)
+                if not project:  # 已被删除的不存在的项目跳过
+                    continue
                 if project['status'] == 0:
                     continue
                 if project['status'] == 1:
-                    content = content + f"【{project['name']}】失败次数超过阈值{notice.faild_count}次\n"
+                    content = content + f"【{project['name']}】测试结果失败，请及时处理！\n"
                 elif project['status'] == 2:
-                    content = content + f"【{project['name']}】超时次数超过阈值{notice.timeout_count}次\n"
+                    content = content + f"【{project['name']}】测试结果超时，请及时处理！\n"
             if content != '' and notice.notice_type == '钉钉':
                 notice_dingding(notice.webhook_url, content, notice.at_all)
             elif content != '' and notice.notice_type == '飞书':
