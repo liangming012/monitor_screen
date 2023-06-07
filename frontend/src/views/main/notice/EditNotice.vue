@@ -85,7 +85,7 @@ const projects = ref([]);
 const screens = ref([]);
 const form = reactive({
   name: '',
-  noticeType: [],
+  noticeType: '',
   webhookUrl: '',
   atAll: false,
   remarks: '',
@@ -116,7 +116,7 @@ const props = defineProps({id: String});
 const getNotice = async () => {
   const res = await api.getNotice(props.id);
   form.name = res.data.name;
-  form.noticeType = res.data.notice_type
+  form.noticeType = res.data.notice_type;
   form.webhookUrl = res.data.webhook_url;
   form.atAll = res.data.at_all;
   form.remarks = res.data.remarks;
