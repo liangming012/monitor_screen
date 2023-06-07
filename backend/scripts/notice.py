@@ -7,7 +7,6 @@ import requests
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
-from core.config import settings
 from crud.crud_notice import crud_notice
 from crud.crud_show import crud_show
 from crud.crud_record import crud_record
@@ -115,6 +114,7 @@ def notice_samebody(db):
                 notice_dingding(notice.webhook_url, content, notice.at_all)
             elif content != '' and notice.notice_type == '飞书':
                 notice_feishu(notice.webhook_url, content, notice.at_all)
+    print('操作完成！')
 
 
 if __name__ == '__main__':
