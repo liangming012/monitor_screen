@@ -7,10 +7,10 @@
         <el-card>
           <el-form :model="form" :rules="rules" ref="ruleFormRef" label-width="auto">
             <el-form-item label="账号：" prop="email">
-              <el-input v-model="form.email" placeholder="请输入账号" />
+              <el-input v-model="form.email" placeholder="请输入账号" @keyup.enter="onSubmit()"/>
             </el-form-item>
             <el-form-item label="密码：" prop="password">
-              <el-input type="password" placeholder="请输入密码" v-model="form.password" />
+              <el-input type="password" placeholder="请输入密码" v-model="form.password"  @keyup.enter="onSubmit()"/>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit()">登录</el-button>
