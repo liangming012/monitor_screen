@@ -9,7 +9,7 @@
           <el-input v-model="form.name" placeholder="请输入项目名称" />
         </el-form-item>
         <el-form-item label="持续时间:" prop="durationLimit">
-          <el-input type="number" v-model="form.durationLimit" placeholder="请输入持续时间" />
+          <el-input v-model.trim="form.durationLimit" placeholder="请输入持续时间" />
         </el-form-item>
         <el-form-item label="Jenkins URL:" prop="jenkinsUrl">
           <el-input v-model="form.jenkinsUrl" placeholder="请输入Jenkins URL"/>

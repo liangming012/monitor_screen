@@ -105,12 +105,6 @@ const searchForm = reactive({
   size: 10,
   name: ''
 })
-const renderHeader = ({ column, $index })=>{
-  // let btn = h('el-button', {props: {size:"mini", type:"primary"}, on:{click:()=>{}}}, '提示')
-  // return h('div', btn)
-  console.log(column);
-  console.log($index);
-}
 
 const initSearchForm = ()=>{
   if(JSON.stringify(router.currentRoute.value.query)!=="{}"){

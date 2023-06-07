@@ -47,12 +47,12 @@
           />
         </el-form-item>
         <el-form-item label="失败报警阈值:" prop="faildCount">
-          <el-input type="number" :rows="3" v-model="form.faildCount" placeholder="请输入报警阈值" max="999" min="1">
+          <el-input :rows="3" v-model.trim="form.faildCount" placeholder="请输入报警阈值" max="999" min="1">
             <template #append>次</template>
           </el-input>
         </el-form-item>
         <el-form-item label="超时报警阈值:" prop="timeOutCount">
-          <el-input type="number" :rows="3" v-model="form.timeOutCount" placeholder="请输入报警阈值" max="999" min="1">
+          <el-input :rows="3" v-model.trim="form.timeOutCount" placeholder="请输入报警阈值" max="999" min="1">
             <template #append>次</template>
           </el-input>
         </el-form-item>
@@ -128,16 +128,18 @@ const getNotice = async () => {
   form.enable = res.data.enable;
 }
 const rules = reactive({
-  name: [{required: true, message: "报警群组名称不能为空", trigger: "blur"},
-    {max: 50, message: "报警群组名称不能超过50个字符"}],
-  webhookUrl: [{required: true, message: "webhook url不能为空", trigger: "blur"},
-    {pattern: /^https?:\/\/.+$/, message: "webhook url必须http://或https://开头", trigger: "blur"},
-    {max: 500, message: "webhook url不能超过500个字符"}],
-  remarks: [{max: 500, message: "备注信息不能超过500个字符"}],
-  screenIds: [{required: true, validator: isEmptyArray, trigger: "change"}], //自定义表单验证
-  projectIds: [{required: true, validator: isEmptyArray, trigger: "change"}], //自定义表单验证
-  faildCount: [{required: true, message: "失败报警阈值不能为空", trigger: "blur"},],
-  timeOutCount: [{required: true, message: "超时报警阈值不能为空", trigger: "blur"},],
+  name: [{ required: true, message: "报警群组名称不能为空", trigger: "blur"},
+    {max:50, message: "报警群组名称不能超过50个字符"}],
+  webhookUrl: [{ required: true, message: "webhook url不能为空", trigger: "blur"},
+    { pattern: /^https?:\/\/.+$/, message: "webhook url必须http://或https://开头", trigger: "blur" },
+    {max:500, message: "webhook url不能超过500个字符"}],
+  remarks: [{max:500, message: "备注信息不能超过500个字符"}],
+  screenIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
+  projectIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
+  faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},
+    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" }],
+  timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},
+    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" }],
 });
 const ruleFormRef = ref();
 const onSubmit = () => {

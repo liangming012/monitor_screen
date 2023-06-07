@@ -37,7 +37,6 @@ def synchronous_data(db):
                 jenkins_url = parse_info.scheme + '://' + parse_info.netloc
                 job_name = urllib.parse.unquote(os.path.basename(os.path.dirname(parse_info.path)), encoding='utf-8', errors='replace')
                 record = get_jenkins_data(jenkins_url, job_name)
-                record_status = 999
                 record_duration = int(record['duration']/1000)
                 if record['result'] == 'SUCCESS' and record_duration <= project.duration_limit:
                     record_status = 0

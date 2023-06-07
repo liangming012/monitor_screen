@@ -9,18 +9,18 @@
           <el-input v-model="form.name" placeholder="请输入屏幕名称" />
         </el-form-item>
         <el-form-item label="显示行数:" prop="row">
-          <el-input type="number" v-model="form.row" placeholder="请输入屏幕内容显示行数" />
+          <el-input v-model.trim="form.row" placeholder="请输入屏幕内容显示行数" />
         </el-form-item>
         <el-form-item label="显示列数:" prop="col">
-          <el-input type="number" v-model="form.col" placeholder="请输入屏幕内容显示列数" />
+          <el-input v-model.trim="form.col" placeholder="请输入屏幕内容显示列数" />
         </el-form-item>
         <el-form-item label="失败报警阈值:" prop="faildCount">
-          <el-input type="number" :rows="3" v-model="form.faildCount" placeholder="请输入报警阈值" max="999" min="1">
+          <el-input :rows="3" v-model.trim="form.faildCount" placeholder="请输入报警阈值" max="999" min="1">
             <template #append>次</template>
           </el-input>
         </el-form-item>
         <el-form-item label="超时报警阈值:" prop="timeOutCount">
-          <el-input type="number" :rows="3" v-model="form.timeOutCount" placeholder="请输入报警阈值" max="999" min="1">
+          <el-input :rows="3" v-model.trim="form.timeOutCount" placeholder="请输入报警阈值" max="999" min="1">
             <template #append>次</template>
           </el-input>
         </el-form-item>
@@ -54,8 +54,10 @@ const rules = reactive({
     { pattern: /^[0-9]*$/, message: "显示行数必须为数字", trigger: "blur" }],
   col: [{ required: true, message: "显示列数不能为空", trigger: "blur" },
     { pattern: /^[0-9]*$/, message: "显示列数必须为数字", trigger: "blur" }],
-  faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},],
-  timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},],
+  faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},
+    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" }],
+  timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},
+    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" }],
 });
 const ruleFormRef = ref();
 const onSubmit = () => {
