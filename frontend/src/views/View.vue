@@ -127,7 +127,7 @@ body {
 }
 
 .name {
-  padding-top: v-bind(16/row+ "vh"); /* 动态计算每个格子的高度*/
+  padding-top: v-bind(18/row+ "vh"); /* 动态计算每个格子的高度*/
   /*line-height: v-bind(50/row + "vh");  !* 动态计算每个格子的高度*!*/
   /*height: v-bind(50/row + "vh");  !* 动态计算每个格子的高度*!*/
   font-size: calc(3vw); /* calc函数动态计算相对窗口宽度大小 */

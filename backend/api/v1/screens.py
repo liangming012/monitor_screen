@@ -84,6 +84,7 @@ def read_screen_by_id(
         if len(records) > 0:
             project['check_time'] = records[0].check_time
             project['status'] = records[0].status
+            project['url'] = records[0].url
             if project['status'] == 1 and screen.faild_count > 1:
                 for m in range(min(screen.faild_count, len(records))):
                     if records[m].status == 0:
