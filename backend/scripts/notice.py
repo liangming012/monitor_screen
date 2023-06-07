@@ -1,6 +1,8 @@
 import json
 import sys
 import os
+import time
+
 import requests
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
@@ -74,8 +76,13 @@ def get_project_data(db, project_id, faild_count, timeout_count):
         records = crud_record.get_records(db, project_id=project.id,
                                           limit=max(faild_count, timeout_count))
         # status值：0=>成功 1=>失败 2=>超时 999=>失效
-        project_dict['check_time'] = records[0].check_time
-        project_dict['status'] = records[0].status
+        if records:
+            project_dict['check_time'] = records[0].check_time
+            project_dict['status'] = records[0].status
+        else:
+            project_dict['check_time'] = int(time.time())
+            project_dict['status'] = 999
+            return project_dict
         if project_dict['status'] == 1 and faild_count > 1:
             for m in range(min(faild_count, len(records))):
                 if records[m].status == 0:
