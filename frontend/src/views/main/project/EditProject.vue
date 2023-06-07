@@ -33,6 +33,7 @@ import {project as api} from "../../../api/project.ts";
 import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
 import ProjectHeader from "../../../components/project/ProjectHeader.vue";
+import {minNumber} from "../../../utils/validate/validate";
 const form = reactive({
   name: '',
   durationLimit: '',
@@ -54,7 +55,8 @@ const rules = reactive({
   name: [{ required: true, message: "项目名称不能为空", trigger: "blur"},
     {max:50, message: "项目名称不能超过50个字符"}],
   durationLimit: [{ required: true, message: "持续时间不能为空", trigger: "blur" },
-    { pattern: /^[0-9]*$/, message: "持续时间必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "持续时间必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   jenkinsUrl: [{ required: true, message: "Jenkins地址不能为空", trigger: "blur"},
     { pattern: /^https?:\/\/.+$/, message: "Jenkins地址必须http://或https://开头", trigger: "blur" },
     {max:500, message: "jenkins地址不能超过500个字符"}],

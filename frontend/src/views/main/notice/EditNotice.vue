@@ -78,7 +78,7 @@ import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
 import {notice as api} from "../../../api/notice.ts";
 import NoticeHeader from "../../../components/notice/NoticeHeader.vue";
-import {isEmptyArray} from "../../../utils/validate/validate.ts";
+import {isEmptyArray, minNumber} from "../../../utils/validate/validate.ts";
 import {project} from "../../../api/project.ts";
 import {screen} from "../../../api/screen.ts";
 const projects = ref([]);
@@ -137,9 +137,11 @@ const rules = reactive({
   screenIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
   projectIds: [{ required: true, validator: isEmptyArray, trigger: "change" }], //自定义表单验证
   faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},
-    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},
-    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
 });
 const ruleFormRef = ref();
 const onSubmit = () => {

@@ -16,10 +16,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="构建ID:" prop="buildId">
-          <el-input type="number" v-model.trim="form.buildId" placeholder="请输入构建ID" />
+          <el-input v-model.trim="form.buildId" placeholder="请输入构建ID" />
         </el-form-item>
         <el-form-item label="持续时间:" prop="duration">
-          <el-input type="number" v-model.trim="form.duration" placeholder="请输入持续时间" />
+          <el-input v-model.trim="form.duration" placeholder="请输入持续时间" />
         </el-form-item>
         <el-form-item label="构建 URL:" prop="url">
           <el-input v-model="form.url" placeholder="请输入构建 URL"/>
@@ -59,6 +59,7 @@ import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
 import RecordHeader from "../../../components/record/RecordHeader.vue";
 import {record as api} from "../../../api/record.ts";
+import {minNumber} from "../../../utils/validate/validate";
 let projects = ref([]);
 const status = [
   {"id": 0, "name": '成功'},
@@ -92,7 +93,7 @@ onMounted(() => {getProjects()});
 
 const form = reactive({
   buildId: null,
-  duration: 0,
+  duration: 1,
   status: null,
   url: '',
   checkTime: null,
@@ -100,8 +101,12 @@ const form = reactive({
 });
 
 const rules = reactive({
-  buildId: [{ required: true, message: "构建ID不能为空", trigger: "blur"}],
-  duration: [{ required: true, message: "持续时间不能为空", trigger: "blur" }],
+  buildId: [{ required: true, message: "构建ID不能为空", trigger: "blur"},
+    { pattern: /^[0-9]*$/, message: "构建ID必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
+  duration: [{ required: true, message: "持续时间不能为空", trigger: "blur" },
+    { pattern: /^[0-9]*$/, message: "持续时间必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   status: [{ required: true, message: "状态必须选择", trigger: "blur"},],
   url: [{ required: true, message: "构建地址不能为空", trigger: "blur"},
     { pattern: /^https?:\/\/.+$/, message: "构建地址必须http://或https://开头", trigger: "blur" },

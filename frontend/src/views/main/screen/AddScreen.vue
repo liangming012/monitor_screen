@@ -40,6 +40,7 @@ import {ElMessage} from "element-plus";
 import router from "../../../router/index.ts";
 import ScreenHeader from "../../../components/screen/ScreenHeader.vue";
 import {screen as api} from "../../../api/screen.ts";
+import {minNumber} from "../../../utils/validate/validate";
 const form = reactive({
   name: '',
   row: 1,
@@ -51,13 +52,17 @@ const rules = reactive({
   name: [{ required: true, message: "屏幕名称不能为空", trigger: "blur"},
     {max:50, message: "屏幕名称不能超过50个字符"}],
   row: [{ required: true, message: "显示行数不能为空", trigger: "blur" },
-    { pattern: /^[0-9]*$/, message: "显示行数必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "显示行数必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   col: [{ required: true, message: "显示列数不能为空", trigger: "blur" },
-    { pattern: /^[0-9]*$/, message: "显示列数必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "显示列数必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   faildCount: [{ required: true, message: "失败报警阈值不能为空", trigger: "blur"},
-    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "失败报警阈值必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
   timeOutCount: [{ required: true, message: "超时报警阈值不能为空", trigger: "blur"},
-    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" }],
+    { pattern: /^[0-9]*$/, message: "超时报警阈值必须为数字", trigger: "blur" },
+    { validator: minNumber, min: 1, trigger: "blur" }],
 });
 const ruleFormRef = ref();
 const onSubmit = () => {
