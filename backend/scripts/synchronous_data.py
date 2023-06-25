@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 import time
@@ -72,6 +73,7 @@ def delete_record(db):
 
 
 if __name__ == '__main__':
+    print(f"{datetime.datetime.now()} 开始执行同步数据脚本")
     db = next(get_db())
     synchronous_data(db)
     delete_record(db)

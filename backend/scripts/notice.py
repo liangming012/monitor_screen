@@ -1,3 +1,4 @@
+import datetime
 import json
 import sys
 import os
@@ -118,6 +119,7 @@ def notice_samebody(db):
 
 
 if __name__ == '__main__':
+    print(f"{datetime.datetime.now()} 开始执行报警脚本")
     notice_samebody(next(get_db()))
 
 
