@@ -1,5 +1,5 @@
-env
-sql_app.db
+venv
+*.db
 .git
 *.md
 __pycache__
