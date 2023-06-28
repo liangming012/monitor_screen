@@ -34,6 +34,6 @@ RUN touch /var/log/cron.log
 # 在容器启动cron并打印日志
 #CMD cron && tail -f /var/log/cron.log
 #CMD cron && uvicorn main:app --host 0.0.0.0 --port 80
-CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80"]
+CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80 --ssl-keyfile /usr/src/app/oasgames.com.key --ssl-certfile /usr/src/app/oasgames.com.crt"]
 # 生成镜像命令         docker build -t monitor_screen_backend:v1.0.0 .
 # 使用镜像运行容器命令   docker run -d --name monitor_screen_backend -p 8000:80 monitor_screen_backend:v1.0.0

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from fastapi import APIRouter
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 from api.v1 import login, users, projects, records, screens, shows, notices
 from core.config import settings
@@ -11,7 +12,8 @@ from core.config import settings
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
-
+# 支持https请求
+app.add_middleware(HTTPSRedirectMiddleware)
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(

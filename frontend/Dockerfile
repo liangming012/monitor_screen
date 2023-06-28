@@ -25,4 +25,4 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 # 生成镜像命令         docker build -t monitor_screen_frontend:v1.0.0 .
-# 使用镜像运行容器命令   docker run -d --name monitor_screen_frontend -p 8000:80 monitor_screen_frontend:v1.0.0
+# 使用镜像运行容器命令   docker run -d --name monitor_screen_frontend -p 8081:80 monitor_screen_frontend:v1.0.0
