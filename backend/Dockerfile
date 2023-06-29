@@ -35,6 +35,9 @@ RUN crontab /etc/cron.d/cronfile
 # 创建cron日志文件
 RUN touch /var/log/cron.log
 
+HEALTHCHECK --interval=10s --timeout=30s --retries=3 \
+  CMD curl -fs -k --insecure "https://localhost:80/api/v1/healthy/" || exit 1
+
 # 在容器启动cron并打印日志
 #CMD cron && tail -f /var/log/cron.log
 #CMD cron && uvicorn main:app --host 0.0.0.0 --port 80

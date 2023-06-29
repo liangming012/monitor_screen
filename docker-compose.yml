@@ -28,7 +28,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       args:
-        INSTALL_DEV: ${INSTALL_DEV-false}
+        INSTALL_DEV: ${INSTALL_DEV-production}
 
   frontend:
     image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
