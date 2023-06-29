@@ -13,7 +13,8 @@ app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 # 支持https请求
-app.add_middleware(HTTPSRedirectMiddleware)
+if settings.ENABLE_HTTPS:
+    app.add_middleware(HTTPSRedirectMiddleware)
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(

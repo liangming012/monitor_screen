@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SQLALCHEMY_DATABASE_URI: str = "sqlite:///./sql_app.db"
+    ENABLE_HTTPS: bool = False
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
     FIRST_SUPERUSER_NAME: str

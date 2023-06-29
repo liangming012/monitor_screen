@@ -20,8 +20,10 @@
 
 - ### 运行程序
 
-        uvicorn main:app --reload
-
+        http请求使用命令： uvicorn main:app --reload
+        https请求使用命令： uvicorn main:app --reload --ssl-keyfile oasgames.com.key --ssl-certfile oasgames.com.crt
+        或运行脚本： python3 run_uvicorn.py
+  
 - ### API 文档
 
     - 访问[交互式API 文档](http://127.0.0.1:8000/docs) ，
