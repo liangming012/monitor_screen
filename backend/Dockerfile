@@ -2,14 +2,18 @@ FROM python:3.9.17
 
 WORKDIR /usr/src/app
 
+# 创建目录映射到宿主机目录用于存放 sql_app.db
+RUN mkdir /usr/sql
+
 COPY requirements.txt ./
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# 首次运行还需要进入容器运行脚本创建超级管理员账号 python3 scripts/create_super_user.py ，创建账号后请登陆该账号修改密码
-RUN alembic upgrade head
+# 打包镜像前注意修改 alembic.ini 配置里的 sqlalchemy.url
+# 首次运行还需要进入容器运行 alembic upgrade head 和 脚本创建超级管理员账号 python3 scripts/create_super_user.py ，创建账号后请登陆该账号修改密码
+# 非首次运行如果数据结构有更新需运行 alembic upgrade head
 
 EXPOSE 80
 
@@ -36,4 +40,4 @@ RUN touch /var/log/cron.log
 #CMD cron && uvicorn main:app --host 0.0.0.0 --port 80
 CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80 --ssl-keyfile /usr/src/app/oasgames.com.key --ssl-certfile /usr/src/app/oasgames.com.crt"]
 # 生成镜像命令         docker build -t monitor_screen_backend:v1.0.0 .
-# 使用镜像运行容器命令   docker run -d --name monitor_screen_backend -p 8000:80 monitor_screen_backend:v1.0.0
+# 使用镜像运行容器命令   docker run -d --name monitor_screen_backend -p 8000:80 --mount type=bind,source=$HOME/sql,target=/usr/sql monitor_screen_backend:v1.0.0
