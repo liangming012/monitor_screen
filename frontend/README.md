@@ -1,5 +1,5 @@
 ## Vue 3 + TypeScript + Vite
-
+    node v19.7.0
 - ### 创建项目
 
         npm create vite@latest
