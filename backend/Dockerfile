@@ -35,7 +35,7 @@ RUN crontab /etc/cron.d/cronfile
 # 创建cron日志文件
 RUN touch /var/log/cron.log
 
-HEALTHCHECK --interval=10s --timeout=30s --retries=3 \
+HEALTHCHECK --interval=10s --timeout=30s --retries=3 --start-period=10s \
   CMD curl -fs -k --insecure "https://localhost:80/api/v1/healthy/" || exit 1
 
 # 在容器启动cron并打印日志

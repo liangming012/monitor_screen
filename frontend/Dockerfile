@@ -22,7 +22,7 @@ COPY --from=build-stage /app/oasgames.com.key /etc/nginx/conf.d/ssl/oasgames.com
 
 EXPOSE 80
 
-HEALTHCHECK --interval=10s --timeout=30s --retries=3 \
+HEALTHCHECK --interval=10s --timeout=30s --retries=3 --start-period=10s \
   CMD curl -fs -k --insecure "http://localhost:80/login" || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
