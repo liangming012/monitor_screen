@@ -6,8 +6,8 @@
         <a id="a_link" :href="record.url" target="_blank">
           <div class="project">
             <div class="success">
-              <div class="name"><strong>{{ record.name }}</strong></div>
-              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div class="name" :style="nameStyle"><strong>{{ record.name }}</strong></div>
+              <div class="time" :style="timeStyle">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -16,8 +16,8 @@
         <a id="a_link" :href="record.url" target="_blank">
           <div class="project">
             <div class="error">
-              <div class="name"><strong>{{ record.name }}</strong></div>
-              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div class="name" :style="nameStyle"><strong>{{ record.name }}</strong></div>
+              <div class="time" :style="timeStyle">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -26,8 +26,8 @@
         <a id="a_link" :href="record.url" target="_blank">
           <div class="project">
             <div class="warning">
-              <div class="name"><strong>{{ record.name }}</strong></div>
-              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div class="name" :style="nameStyle"><strong>{{ record.name }}</strong></div>
+              <div class="time" :style="timeStyle">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -36,8 +36,8 @@
         <a id="a_link" :href="record.url" target="_blank">
           <div class="project">
             <div class="invalid">
-              <div class="name"><strong>{{ record.name }}</strong></div>
-              <div v-if="isShowCheckTime" class="time">检查时间:{{ getDateTime(record.check_time) }}</div>
+              <div class="name" :style="nameStyle"><strong>{{ record.name }}</strong></div>
+              <div class="time" :style="timeStyle">检查时间:{{ getDateTime(record.check_time) }}</div>
             </div>
           </div>
         </a>
@@ -55,6 +55,8 @@ import axios from "axios";
 
 let row = ref(1);
 let col = ref(1);
+let nameStyle = ref('');
+let timeStyle = ref('');
 let networkError = ref(false);
 const records = ref([]);
 onMounted(() => {
@@ -66,19 +68,14 @@ const instance = axios.create({
   // 超时时间
   timeout: 30000,
 });
-const isShowCheckTime = computed(()=>{
-  if(window.innerWidth/window.innerHeight >= 3){
-    return false;
-  }else{
-    return true;
-  }
-});
 const getViewData = async () => {
   instance.get(`screens/${getLastItem(router.currentRoute.value.path)}/show`)
       .then(function (response) {
         // handle success
         row.value = response.data.screen.row;
         col.value = response.data.screen.col;
+        nameStyle.value = response.data.screen.name_style;
+        timeStyle.value = response.data.screen.time_style;
         records.value = response.data.data;
         networkError.value = false;
       })
@@ -88,6 +85,8 @@ const getViewData = async () => {
           networkError.value = true;
           row.value = 0;
           col.value = 0;
+          nameStyle.value = '';
+          timeStyle.value = '';
           records.value = [];
         }
       })

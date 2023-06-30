@@ -24,6 +24,12 @@
             <template #append>次</template>
           </el-input>
         </el-form-item>
+        <el-form-item label="项目名称样式:" prop="nameStyle">
+          <el-input v-model="form.nameStyle" placeholder="请输入项目名称样式" />
+        </el-form-item>
+        <el-form-item label="检查时间样式:" prop="timeStyle">
+          <el-input v-model="form.timeStyle" placeholder="请输入检查时间样式" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit()">提交</el-button>
           <el-button type="primary" @click="resetForm()">重置</el-button>
@@ -48,6 +54,8 @@ const form = reactive({
   col: 1,
   faildCount: 1,
   timeOutCount: 1,
+  nameStyle: '',
+  timeStyle: ''
 });
 
 onMounted(() => {
@@ -61,6 +69,8 @@ const getProject = async () => {
   form.col = res.data.col;
   form.faildCount = res.data.faild_count;
   form.timeOutCount = res.data.timeout_count;
+  form.nameStyle = res.data.name_style;
+  form.timeStyle = res.data.time_style;
 }
 const rules = reactive({
   name: [{ required: true, message: "屏幕名称不能为空", trigger: "blur"},
@@ -91,6 +101,8 @@ const onSubmit = () => {
             col: form.col,
             faild_count: form.faildCount,
             timeout_count: form.timeOutCount,
+            name_style: form.nameStyle,
+            time_style: form.timeStyle,
           });
       if (response.data) {
         await router.push({name: 'screens', query: router.currentRoute.value.query})
