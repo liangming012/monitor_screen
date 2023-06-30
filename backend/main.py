@@ -11,8 +11,8 @@ from core.config import settings
 # from api.deps import engine
 # from models.base import Base
 # Base.metadata.create_all(bind=engine)
-env = os.getenv('INSTALL_DEV')
-if env != 'production':
+env = os.getenv('ENV')
+if env == 'production':
     app = FastAPI(title=settings.PROJECT_NAME, docs_url=None, redoc_url=None, openapi_url=None)
 else:
     app = FastAPI(

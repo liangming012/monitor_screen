@@ -24,11 +24,10 @@ services:
     environment:
       - SERVER_NAME=${DOMAIN?Variable not set}
       - SERVER_HOST=${DOMAIN?Variable not set}
+      - ENV=production
     build:
       context: ./backend
       dockerfile: Dockerfile
-      args:
-        INSTALL_DEV: ${INSTALL_DEV-production}
 
   frontend:
     image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
@@ -43,8 +42,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        FRONTEND_ENV: ${FRONTEND_ENV-production}
 
 networks:
   nets:
