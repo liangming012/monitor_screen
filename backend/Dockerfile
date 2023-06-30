@@ -42,6 +42,7 @@ HEALTHCHECK --interval=10s --timeout=30s --retries=3 --start-period=10s \
 #CMD cron && tail -f /var/log/cron.log
 #CMD cron && uvicorn main:app --host 0.0.0.0 --port 80
 #不启用https协议不用参数 ssl-keyfile 和 ssl-certfile
-CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80 --ssl-keyfile /usr/src/app/oasgames.com.key --ssl-certfile /usr/src/app/oasgames.com.crt"]
+CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80"]
+#CMD ["/bin/bash", "-c", "cron;uvicorn main:app --host 0.0.0.0 --port 80 --ssl-keyfile /usr/src/app/oasgames.com.key --ssl-certfile /usr/src/app/oasgames.com.crt"]
 # 生成镜像命令         docker build -t monitor_screen_backend:v1.0.0 .
 # 使用镜像运行容器命令   docker run -d --name monitor_screen_backend -p 8000:80 --mount type=bind,source=$HOME/sql,target=/usr/sql monitor_screen_backend:v1.0.0
