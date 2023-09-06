@@ -17,6 +17,9 @@ class CRUDBase:
         """
         self.model = model
 
+    def list(self, db: Session):
+        return db.query(self.model).all()
+
     def get(self, db: Session, unique_id: Any) -> Any:
         return db.query(self.model).filter(self.model.id == unique_id).first()
 

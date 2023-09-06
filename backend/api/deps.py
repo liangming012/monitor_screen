@@ -9,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 
 from core import security
 from core.config import settings
+from core.security import verify_password, get_password_hash
 from crud.crud_user import crud_user
 from models.user_model import UserModel
 from schemas.token import TokenPayload
@@ -45,6 +46,8 @@ def login_user(
     user = crud_user.get(db, unique_id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="找不到该用户！")
+    if not verify_password(user.hashed_password, token_data.check):
+        raise HTTPException(status_code=400, detail="token已失效，请重新登录！")
     return user
 
 

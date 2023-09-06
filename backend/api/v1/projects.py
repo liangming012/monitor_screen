@@ -5,22 +5,39 @@ from api import deps
 from crud.crud_project import crud_project
 from models.user_model import UserModel
 from schemas.msg import Msg
-from schemas.project import Project, ProjectUpdate, ProjectCreate
+from schemas.project import Project, ProjectUpdate, ProjectCreate, Projects
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Project])
+@router.get("/", response_model=Projects)
 def get_projects(
     db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
+    name: str = '',
+    current: int = 1,
+    size: int = 10,
     current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取项目列表
     """
-    projects = crud_project.get_multi(db, skip=skip, limit=limit)
+    total = crud_project.get_projects_count(db, name=name)
+    if total:
+        projects = crud_project.get_projects(db, name=name, skip=(current - 1) * size, limit=size)
+    else:
+        projects = []
+    return Projects(records=projects, total=total)
+
+
+@router.get("/list", response_model=List[Project])
+def project_list(
+    db: Session = Depends(deps.get_db),
+    current_user: UserModel = Depends(deps.active_user),
+) -> Any:
+    """
+    获取项目列表
+    """
+    projects = crud_project.list(db)
     return projects
 
 

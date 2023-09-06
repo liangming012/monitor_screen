@@ -2,26 +2,33 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from api import deps
+from crud.crud_project import crud_project
+from crud.crud_screen import crud_screen
 from crud.crud_show import crud_show
 from models.user_model import UserModel
 from schemas.msg import Msg
-from schemas.show import Show, ShowUpdate, ShowCreate
+from schemas.show import Show, ShowUpdate, ShowCreate, Shows
 
 router = APIRouter()
 
 
-@router.get("/", response_model=List[Show])
+@router.get("/", response_model=Shows)
 def get_shows(
         db: Session = Depends(deps.get_db),
-        skip: int = 0,
-        limit: int = 100,
+        id: str = '',
+        current: int = 1,
+        size: int = 10,
         current_user: UserModel = Depends(deps.active_user),
 ) -> Any:
     """
     获取展示项目列表
     """
-    shows = crud_show.get_multi(db, skip=skip, limit=limit)
-    return shows
+    total = crud_show.get_shows_count(db, screen_id=id)
+    if total:
+        shows = crud_show.get_shows(db, screen_id=id, skip=(current - 1) * size, limit=size)
+    else:
+        shows = []
+    return Shows(records=shows, total=total)
 
 
 @router.get("/{show_id}", response_model=Show)
@@ -82,5 +89,17 @@ def create_show(show_in: ShowCreate,
                 db: Session = Depends(deps.get_db),
                 current_user: UserModel = Depends(deps.active_user)
                 ) -> Any:
+    project = crud_project.get(db, unique_id=show_in.project_id)
+    if not project:
+        raise HTTPException(
+            status_code=404,
+            detail=f"找不到项目ID为 {show_in.project_id} 的项目！",
+        )
+    screen = crud_screen.get(db, unique_id=show_in.screen_id)
+    if not screen:
+        raise HTTPException(
+            status_code=404,
+            detail=f"找不到屏幕ID为 {show_in.screen_id} 的项目！",
+        )
     show = crud_show.create(db, show_in)
     return show

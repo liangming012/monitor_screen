@@ -10,7 +10,7 @@ class RecordModel(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     build_id: Mapped[int] = mapped_column(nullable=False)
     duration: Mapped[int] = mapped_column(nullable=False, default=0)
-    status: Mapped[int] = mapped_column(nullable=False)
+    status: Mapped[int] = mapped_column(nullable=False)  # 0=>成功 1=>失败 2=>超时 999=>失效
     url: Mapped[str] = mapped_column(String(500), default=True)
     check_time: Mapped[int] = mapped_column(nullable=False)
     create_time: Mapped[int] = mapped_column(nullable=False)
@@ -19,5 +19,6 @@ class RecordModel(Base):
     project: Mapped["ProjectModel"] = relationship(back_populates="records")
 
     def __repr__(self) -> str:
-        return f"RecordModel(id={self.id!r}, name={self.name!r}, duration_limit={self.duration_limit!r}), " \
-               f"jenkins_url={self.jenkins_url!r}, enable={self.enable!r})"
+        return f"RecordModel(id={self.id!r}, build_id={self.build_id!r}, duration={self.duration!r}, " \
+               f"status={self.status!r}, url={self.url!r}, check_time={self.check_time!r}, " \
+               f"create_time={self.create_time!r}, project_id={self.project_id!r}, project={self.project!r})"

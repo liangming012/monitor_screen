@@ -22,13 +22,17 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SQLALCHEMY_DATABASE_URI: str = "sqlite:///./sql_app.db"
+    ENABLE_HTTPS: bool = False
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
     FIRST_SUPERUSER_NAME: str
+    JENKINS_ACCOUNT: str
+    JENKINS_PWD: str
+    RECORD_SAVE_TIME: int
 
     class Config:
         case_sensitive = True
-        env_file = find_dotenv("../../.env")
+        env_file = find_dotenv("../.env")
 
 
 settings = Settings()

@@ -1,0 +1,48 @@
+# 注意事项：
+# 1、运行 docker compose up -d 前先修改backend目录里的.env文件的SQLALCHEMY_DATABASE_URI 和 alembic.ini 文件的 sqlalchemy.url
+# 2、如果启用https需要修改 backend目录里的.env文件的ENABLE_HTTPS （backend目录里CMD使用了参数ssl-keyfile 和 ssl-certfile就必须启用https）
+# 3、请重新生成 backend目录里的.env文件的SECRET_KEY
+# 4、首次运行还需要进入容器运行 alembic upgrade head 和 脚本创建超级管理员账号 python3 scripts/create_super_user.py（并修改超级管理员密码）
+# 5、如果要在同局域网的其他设备访问，请修改 backend目录里的.env文件的BACKEND_CORS_ORIGINS，加入前端项目地址如：http://10.1.16.50:8081
+# 6、如果要在同局域网的其他设备访问，请修改 frontend目录里的.env文件的VITE_APP_DOMAIN，改成后端地址如：https://10.1.16.50:8000
+version: "3.3"
+services:
+
+  backend:
+    # DOCKER_IMAGE_BACKEND 、TAG、DOMAIN 变量的值默认从当前文件目录.env文件加载
+    image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
+    container_name: '${DOCKER_IMAGE_BACKEND?Variable not set}'
+    restart: always
+    networks:
+      - nets
+    ports:
+      - "8000:80"
+    env_file:
+      - ./.env
+    volumes:
+      - $HOME/sql:/usr/sql
+    environment:
+      - SERVER_NAME=${DOMAIN?Variable not set}
+      - SERVER_HOST=${DOMAIN?Variable not set}
+      - ENV=production
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+  frontend:
+    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
+    container_name: '${DOCKER_IMAGE_FRONTEND?Variable not set}'
+    restart: always
+    networks:
+      - nets
+    ports:
+      - "8081:80"
+    env_file:
+      - ./.env
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+networks:
+  nets:
+    external: false

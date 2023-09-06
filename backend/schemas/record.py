@@ -1,9 +1,12 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
 
 # 基础属性
+from schemas.project import Project
+
+
 class RecordBase(BaseModel):
     build_id: Optional[int] = None
     duration: Optional[int] = None
@@ -37,7 +40,13 @@ class RecordInDBBase(RecordBase):
         orm_mode = True
 
 
-# API返回项目信息
+# API返回记录信息
 class Record(RecordInDBBase):
     create_time: Optional[int] = None
+    project: Project
 
+
+# API返回记录信息
+class Records(BaseModel):
+    records: List[Record]
+    total: int

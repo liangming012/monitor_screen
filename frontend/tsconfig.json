@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "node", // 默认值为 bundler ， 使用element-plus 需要设置为node
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
+    "strict": false,  //  非严格模式
+    "noUnusedLocals": false, //    false解决声明变量未使用的问题
+    "noUnusedParameters": false, //    false解决声明函数未使用的问题
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false, //    false解决需要显示声明所有变量类型的问题
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

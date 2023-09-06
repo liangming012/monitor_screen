@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, List, Any
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
 from models.user_model import UserModel
@@ -9,11 +9,21 @@ from core.security import get_password_hash, verify_password
 
 class CRUDUser(CRUDBase):
 
+    def get_users_count(self, db: Session, name='') -> int:
+        return db.query(self.model).filter(UserModel.full_name.like(f'%{name}%')).count()
+
+    def get_users(self, db: Session, name='', skip: int = 0, limit: int = 100) -> List[Any]:
+        if name:
+            return db.query(self.model).filter(UserModel.full_name.like(f'%{name}%')).offset(skip).limit(limit).all()
+        else:
+            return db.query(self.model).offset(skip).limit(limit).all()
+
     def get_user(self, db: Session, email: str) -> Optional[UserModel]:
         return db.query(UserModel).filter(UserModel.email == email).first()
 
     def create(self, db: Session, obj_in: UserCreate) -> UserModel:
         db_obj = UserModel(
+            is_active=obj_in.is_active,
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
             full_name=obj_in.full_name,
@@ -29,7 +39,7 @@ class CRUDUser(CRUDBase):
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
-        if update_data["password"]:
+        if "password" in update_data.keys() and update_data["password"]:
             hashed_password = get_password_hash(update_data["password"])
             del update_data["password"]
             update_data["hashed_password"] = hashed_password

@@ -1,0 +1,2 @@
+* * * * * cd /usr/src/app && /usr/local/bin/python3 ./scripts/synchronous_data.py >> /var/log/cron.log 2>&1
+* * * * * cd /usr/src/app && /usr/local/bin/python3 ./scripts/notice.py >> /var/log/cron.log 2>&1
