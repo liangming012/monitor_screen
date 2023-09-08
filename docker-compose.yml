@@ -1,10 +1,15 @@
 # 注意事项：
 # 1、运行 docker compose up -d 前先修改backend目录里的.env文件的SQLALCHEMY_DATABASE_URI 和 alembic.ini 文件的 sqlalchemy.url
 # 2、如果启用https需要修改 backend目录里的.env文件的ENABLE_HTTPS （backend目录里CMD使用了参数ssl-keyfile 和 ssl-certfile就必须启用https）
-# 3、请重新生成 backend目录里的.env文件的SECRET_KEY
+# 3、请重新生成 backend目录里的.env文件的SECRET_KEY， 使用命令 openssl rand -hex 32 生成
 # 4、首次运行还需要进入容器运行 alembic upgrade head 和 脚本创建超级管理员账号 python3 scripts/create_super_user.py（并修改超级管理员密码）
 # 5、如果要在同局域网的其他设备访问，请修改 backend目录里的.env文件的BACKEND_CORS_ORIGINS，加入前端项目地址如：http://10.1.16.50:8081
 # 6、如果要在同局域网的其他设备访问，请修改 frontend目录里的.env文件的VITE_APP_DOMAIN，改成后端地址如：https://10.1.16.50:8000
+# 7、宿主机卷对应的 $HOME/sql 目录如果不存在需要自己手动创建，docker-compose.yml里宿主机的卷目录$HOME/sql最好替换成实际绝对目录
+# 8、容器里的cron定时任务未执行，可能是从windows电脑复制到linux电脑时cronfile文件里的换行符自动变成/r导致的
+#    使用sed命令删除crontab文件中的\r字符。运行以下命令来删除\r字符并覆盖原始文件，并重新运行：
+#    sed -i 's/\r//g' /etc/cron.d/cronfile
+#    crontab /etc/cron.d/cronfile
 version: "3.3"
 services:
 
